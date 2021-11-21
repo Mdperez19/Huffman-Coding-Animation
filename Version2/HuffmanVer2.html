@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js</title>
+</head>
+
+<body>
+    <div id="d3"></div>
+    <!-- Graph -->
+    <div class="graph">
+        <h2>Graph</h2>
+    </div>
+    <script src="js/util/d3.min.js"></script>
+
+    <script src="js/util/priority-queue.min.js"></script>
+</body>
+
+</html>
+
+<script>
+    class Nodo {
+        constructor(count, symb, [a, b], digit) {
+            this.digit = digit;
+            this.count = count;
+            this.symb = symb;
+            this.children = [a, b];
+        }
+    }
+
+    var msg = 'hola';
+
+    buildCount = (msg) => {
+        const obj = {};
+        msg.split('').forEach(e => {
+            if (!obj[e]) obj[e] = 0;
+            obj[e] += 1;
+        });
+        return obj;
+    }
+
+    var count = buildCount(msg);
+    buildTree = count => {
+        const pq = new PriorityQueue({
+            comparator: function (a, b) {
+                return a.count - b.count;
+            }
+        });
+
+        Object.entries(count).forEach(([k, v]) =>
+            pq.queue(new Nodo(v, k, [null, null], null))
+        );
+
+        /*var size=pq.length;
+        for (let i = 0; i < size; i++) {
+            console.log(pq.dequeue());
+        }*/
+
+        while (pq.length) {
+            const a = pq.dequeue();
+            if (pq.length == 0)
+                return a;
+            const b = pq.dequeue();
+            a.digit = 0;
+            b.digit = 1;
+            var value = a.count + b.count;
+            pq.queue(new Nodo(value, null, [a, b], null));
+        }
+    }
+
+    var arbol = buildTree(count);
+    console.log(buildCount(msg));
+    console.log(arbol);
+
+    const treeData = {
+  "name": "Eve",
+  "value": 15,
+  "type": "black",
+  "level": "yellow",
+  "children": [
+    {
+      "name": "Cain",
+      "value": 10,
+      "type": "grey",
+      "level": "red"
+    },
+    {
+      "name": "Seth",
+      "value": 10,
+      "type": "grey",
+      "level": "red",
+      "children": [
+        {
+          "name": "Enos",
+          "value": 7.5,
+          "type": "grey",
+          "level": "purple"
+        },
+        {
+          "name": "Noam",
+          "value": 7.5,
+          "type": "grey",
+          "level": "purple"
+        }
+      ]
+    },
+    {
+      "name": "Abel",
+      "value": 10,
+      "type": "grey",
+      "level": "blue"
+    },
+    {
+      "name": "Awan",
+      "value": 10,
+      "type": "grey",
+      "level": "green",
+      "children": [
+        {
+          "name": "Enoch",
+          "value": 7.5,
+          "type": "grey",
+          "level": "orange"
+        }
+      ]
+    },
+    {
+      "name": "Azura",
+      "value": 10,
+      "type": "grey",
+      "level": "green"
+    }
+  ]
+};
+
+// set the dimensions and margins of the diagram
+const margin = {top: 20, right: 90, bottom: 30, left: 90},
+      width  = 660 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+
+// declares a tree layout and assigns the size
+const treemap = d3.tree().size([height, width]);
+
+//  assigns the data to a hierarchy using parent-child relationships
+let nodes = d3.hierarchy(treeData, d => d.children);
+
+// maps the node data to the tree layout
+nodes = treemap(nodes);
+
+// append the svg object to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+const svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom),
+      g = svg.append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+// adds the links between the nodes
+const link = g.selectAll(".link")
+    .data( nodes.descendants().slice(1))
+  .enter().append("path")
+    .attr("class", "link")
+    .style("stroke", d => d.data.level)
+    .attr("d", d => {
+       return "M" + d.y + "," + d.x
+         + "C" + (d.y + d.parent.y) / 2 + "," + d.x
+         + " " + (d.y + d.parent.y) / 2 + "," + d.parent.x
+         + " " + d.parent.y + "," + d.parent.x;
+       });
+
+// adds each node as a group
+const node = g.selectAll(".node")
+    .data(nodes.descendants())
+    .enter().append("g")
+    .attr("class", d => "node" + (d.children ? " node--internal" : " node--leaf"))
+    .attr("transform", d => "translate(" + d.y + "," + d.x + ")");
+
+// adds the circle to the node
+node.append("circle")
+  .attr("r", d => d.data.value)
+  .style("stroke", d => d.data.type)
+  .style("fill", d => d.data.level);
+  
+// adds the text to the node
+node.append("text")
+  .attr("dy", ".35em")
+  .attr("x", d => d.children ? (d.data.value + 5) * -1 : d.data.value + 5)
+  .attr("y", d => d.children && d.depth !== 0 ? -(d.data.value + 5) : d)
+  .style("text-anchor", d => d.children ? "end" : "start")
+  .text(d => d.data.name);
+    
+    
+</script>
+
+
