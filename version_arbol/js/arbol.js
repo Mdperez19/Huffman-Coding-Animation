@@ -8,12 +8,12 @@ window.onload = function () {
     }
   }
 
-  var msg = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora rem animi quisquam asperiores, sint porro veniam, officia mollitia accusantium autem voluptate? Vel ea modi corporis unde, recusandae porro magnam repellat.';
+  var msg = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccddddddddddddddddeeeeeeeeefffff';
 
   buildCount = (msg) => {
     const obj = {};
     msg.split('').forEach(e => {
-      if(e == ' ')
+      if (e == ' ')
         e = 'esp';
       if (!obj[e]) obj[e] = 0;
       obj[e] += 1;
@@ -37,7 +37,7 @@ window.onload = function () {
     for (let i = 0; i < size; i++) {
         console.log(pq.dequeue());
     }*/
-    var id=0;
+    var id = 0;
     while (pq.length) {
       const a = pq.dequeue();
       if (pq.length == 0)
@@ -46,7 +46,7 @@ window.onload = function () {
       a.digit = 0;
       b.digit = 1;
       var value = a.count + b.count;
-      pq.queue(new Nodo(value, 'r'+id, [a, b], null));
+      pq.queue(new Nodo(value, 'r' + id, [a, b], null));
       id++;
     }
   }
@@ -56,21 +56,19 @@ window.onload = function () {
 
   function dataSet(root, elements, edges) {
     if (root.children[0] == null) {
-    elements.push({
-      "data": {
-        "id": root.symb,
-        "name":root.symb
-      }
-    }
-    );
-  }else
-  elements.push({
-    "data": {
-      "id": root.symb,
-      "name":root.count
-    }
-  }
-  );
+      elements.push({
+        "data": {
+          "id": root.symb,
+          "name": root.symb
+        }
+      });
+    } else
+      elements.push({
+        "data": {
+          "id": root.symb,
+          "name": root.count
+        }
+      });
     if (root.children[0] != null) {
       edges.push({
         "data": {
@@ -78,8 +76,7 @@ window.onload = function () {
           "target": root.children[0].symb,
           "label": root.children[0].digit
         }
-      }
-      );
+      });
       dataSet(root.children[0], elements, edges);
     }
 
@@ -90,8 +87,7 @@ window.onload = function () {
           "target": root.children[1].symb,
           "label": root.children[1].digit
         }
-      }
-      );
+      });
       dataSet(root.children[1], elements, edges);
     }
 
@@ -146,25 +142,76 @@ window.onload = function () {
       name: 'dagre'
     }
   });
-  var aStar = cy.elements().aStar({
-    root: arbol.symb,
-    goal: "#f"
-  });
 
-  aStar.path.select();
-  console.log(aStar.distance);
-  var i = 0;
+  colorear = (simbolo) => {
+    var aStar = cy.elements().aStar({
+      root: arbol.symb,
+      goal: "#" + simbolo
+    });
 
-  console.log(aStar.path.length);
-  var highlightNextEle = function () {
-    aStar.path[i].addClass('highlighted');
-    /*if(aStar.path[i]._private.data.label!=undefined)
-        console.log(aStar.path[i]._private.data.label.toString());*/
-    i++;
-    setTimeout(highlightNextEle, 500);
+    aStar.path.select();
+    console.log(aStar.distance);
+    var i = 0;
+
+    console.log(aStar.path.length);
+    var highlightNextEle = function () {
+      aStar.path[i].addClass('highlighted');
+      /*if(aStar.path[i]._private.data.label!=undefined)
+          console.log(aStar.path[i]._private.data.label.toString());*/
+      i++;
+      setTimeout(highlightNextEle, 500);
+    };
+    highlightNextEle();
   };
-  highlightNextEle();
 
+  colorear("f");
+
+  setTimeout(() => {
+    cy = cytoscape({
+      container: document.getElementById('cy'),
+
+      boxSelectionEnabled: false,
+      autounselectify: true,
+
+
+      style: cytoscape.stylesheet()
+        .selector('node')
+        .style({
+          'content': 'data(name)'
+        })
+        .selector('edge')
+        .style({
+          'curve-style': 'bezier',
+          'target-arrow-shape': 'triangle',
+          'width': 4,
+          'line-color': '#ddd',
+          'target-arrow-color': '#ddd',
+          'label': 'data(label)'
+        })
+        .selector('.highlighted')
+        .style({
+          'background-color': '#61bffc',
+          'line-color': '#61bffc',
+          'target-arrow-color': '#61bffc',
+          'transition-property': 'background-color, line-color, target-arrow-color',
+          'transition-duration': '0.5s'
+        }),
+
+      elements: {
+        nodes: nodos,
+
+        edges: links
+      },
+
+      layout: {
+        name: 'dagre'
+      }
+    });
+  }, 5000);
+
+  setTimeout(() => {
+    colorear("c");
+  }, 5000);
   /*
     let i = 0;
   
