@@ -1,3 +1,9 @@
+const STRATOS = "#001B48";
+const REGAL_BLUE = "#02457A";
+const BONDI_BLUE = "#018ABE";
+const MORNING_GLORY = "#97CADB";
+const BOTTICELLI = "#D6E8EE";
+
 window.onload = function () {
   class Nodo {
     constructor(count, symb, [a, b], digit) {
@@ -102,7 +108,7 @@ window.onload = function () {
   console.log(nodos);
   console.log(links);
 
-  var cy = cytoscape({
+  const config = {
     container: document.getElementById('cy'),
 
     boxSelectionEnabled: false,
@@ -112,22 +118,23 @@ window.onload = function () {
     style: cytoscape.stylesheet()
       .selector('node')
       .style({
-        'content': 'data(name)'
+        'content': 'data(name)',
+        'background-color': BONDI_BLUE,
       })
       .selector('edge')
       .style({
         'curve-style': 'bezier',
         'target-arrow-shape': 'triangle',
         'width': 4,
-        'line-color': '#ddd',
-        'target-arrow-color': '#ddd',
+        'line-color': BOTTICELLI,
+        'target-arrow-color': BOTTICELLI,
         'label': 'data(label)'
       })
       .selector('.highlighted')
       .style({
-        'background-color': '#61bffc',
-        'line-color': '#61bffc',
-        'target-arrow-color': '#61bffc',
+        'background-color': REGAL_BLUE,
+        'line-color': REGAL_BLUE,
+        'target-arrow-color': REGAL_BLUE,
         'transition-property': 'background-color, line-color, target-arrow-color',
         'transition-duration': '0.5s'
       }),
@@ -141,7 +148,8 @@ window.onload = function () {
     layout: {
       name: 'dagre'
     }
-  });
+  };
+  var cy = cytoscape(config);
 
   colorear = (simbolo) => {
     var aStar = cy.elements().aStar({
@@ -167,46 +175,7 @@ window.onload = function () {
   colorear("f");
 
   setTimeout(() => {
-    cy = cytoscape({
-      container: document.getElementById('cy'),
-
-      boxSelectionEnabled: false,
-      autounselectify: true,
-
-
-      style: cytoscape.stylesheet()
-        .selector('node')
-        .style({
-          'content': 'data(name)'
-        })
-        .selector('edge')
-        .style({
-          'curve-style': 'bezier',
-          'target-arrow-shape': 'triangle',
-          'width': 4,
-          'line-color': '#ddd',
-          'target-arrow-color': '#ddd',
-          'label': 'data(label)'
-        })
-        .selector('.highlighted')
-        .style({
-          'background-color': '#61bffc',
-          'line-color': '#61bffc',
-          'target-arrow-color': '#61bffc',
-          'transition-property': 'background-color, line-color, target-arrow-color',
-          'transition-duration': '0.5s'
-        }),
-
-      elements: {
-        nodes: nodos,
-
-        edges: links
-      },
-
-      layout: {
-        name: 'dagre'
-      }
-    });
+    cy = cytoscape(config);
   }, 5000);
 
   setTimeout(() => {
