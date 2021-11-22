@@ -8,7 +8,7 @@ window.onload = function () {
     }
   }
 
-  var msg = 'Moises Palacios Izquierdo';
+  var msg = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccddddddddddddddddeeeeeeeeefffff';
 
   buildCount = (msg) => {
     const obj = {};
@@ -37,7 +37,6 @@ window.onload = function () {
     for (let i = 0; i < size; i++) {
         console.log(pq.dequeue());
     }*/
-    var id = 0;
     while (pq.length) {
       const a = pq.dequeue();
       if (pq.length == 0)
@@ -46,8 +45,7 @@ window.onload = function () {
       a.digit = 0;
       b.digit = 1;
       var value = a.count + b.count;
-      pq.queue(new Nodo(value, 'r' + id, [a, b], null));
-      id++;
+      pq.queue(new Nodo(value, 'r'+value, [a, b], null));
     }
   }
 
@@ -67,7 +65,8 @@ window.onload = function () {
       edges.push({
         "data": {
           "source": root.symb,
-          "target": root.children[0].symb
+          "target": root.children[0].symb,
+          "label": root.children[0].digit
         }
       }
       );
@@ -78,7 +77,8 @@ window.onload = function () {
       edges.push({
         "data": {
           "source": root.symb,
-          "target": root.children[1].symb
+          "target": root.children[1].symb,
+          "label": root.children[1].digit
         }
       }
       );
@@ -114,7 +114,8 @@ window.onload = function () {
         'target-arrow-shape': 'triangle',
         'width': 4,
         'line-color': '#ddd',
-        'target-arrow-color': '#ddd'
+        'target-arrow-color': '#ddd',
+        'label': 'data(label)'
       })
       .selector('.highlighted')
       .style({
@@ -135,7 +136,22 @@ window.onload = function () {
       name: 'dagre'
     }
   });
+  var aStar = cy.elements().aStar({
+    root: "#r100",
+    goal: "#d"
+  });
 
+  aStar.path.select();
+  console.log(aStar.distance);
+  var i = 0;
+
+  console.log(aStar.path.length);
+  var highlightNextEle = function () {
+    aStar.path[i].addClass('highlighted');
+    i++;
+    setTimeout(highlightNextEle, 500);
+  };
+  highlightNextEle();
   /*setTimeout(function () {
     var aStar = cy.elements().aStar({
       root: "#3",
