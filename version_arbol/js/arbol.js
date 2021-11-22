@@ -8,7 +8,7 @@ window.onload = function () {
     }
   }
 
-  var msg = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccddddddddddddddddeeeeeeeeefffff';
+  var msg = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora rem animi quisquam asperiores, sint porro veniam, officia mollitia accusantium autem voluptate? Vel ea modi corporis unde, recusandae porro magnam repellat.';
 
   buildCount = (msg) => {
     const obj = {};
@@ -37,6 +37,7 @@ window.onload = function () {
     for (let i = 0; i < size; i++) {
         console.log(pq.dequeue());
     }*/
+    var id=0;
     while (pq.length) {
       const a = pq.dequeue();
       if (pq.length == 0)
@@ -45,7 +46,8 @@ window.onload = function () {
       a.digit = 0;
       b.digit = 1;
       var value = a.count + b.count;
-      pq.queue(new Nodo(value, 'r'+value, [a, b], null));
+      pq.queue(new Nodo(value, 'r'+id, [a, b], null));
+      id++;
     }
   }
 
@@ -53,14 +55,22 @@ window.onload = function () {
   var links = [];
 
   function dataSet(root, elements, edges) {
-
+    if (root.children[0] == null) {
     elements.push({
       "data": {
-        "id": root.symb
+        "id": root.symb,
+        "name":root.symb
       }
     }
     );
-
+  }else
+  elements.push({
+    "data": {
+      "id": root.symb,
+      "name":root.count
+    }
+  }
+  );
     if (root.children[0] != null) {
       edges.push({
         "data": {
@@ -106,7 +116,7 @@ window.onload = function () {
     style: cytoscape.stylesheet()
       .selector('node')
       .style({
-        'content': 'data(id)'
+        'content': 'data(name)'
       })
       .selector('edge')
       .style({
@@ -137,8 +147,8 @@ window.onload = function () {
     }
   });
   var aStar = cy.elements().aStar({
-    root: "#r100",
-    goal: "#d"
+    root: arbol.symb,
+    goal: "#f"
   });
 
   aStar.path.select();
@@ -148,10 +158,30 @@ window.onload = function () {
   console.log(aStar.path.length);
   var highlightNextEle = function () {
     aStar.path[i].addClass('highlighted');
+    /*if(aStar.path[i]._private.data.label!=undefined)
+        console.log(aStar.path[i]._private.data.label.toString());*/
     i++;
     setTimeout(highlightNextEle, 500);
   };
   highlightNextEle();
+
+  /*
+    let i = 0;
+  
+  while (i < aStar.path.length) {
+    task(i);
+     i++;
+  }
+  function task(i) {
+    
+    setTimeout(function() {
+      aStar.path[i].addClass('highlighted');
+      if(aStar.path[i]._private.data.label!=undefined)
+        this.codigo+=aStar.path[i]._private.data.label;
+    }, 500 * i);
+  }
+  console.log(this.codigo);
+  */
   /*setTimeout(function () {
     var aStar = cy.elements().aStar({
       root: "#3",
