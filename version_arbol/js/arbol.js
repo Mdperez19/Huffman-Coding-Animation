@@ -3,24 +3,21 @@ const REGAL_BLUE = "#02457A";
 const BONDI_BLUE = "#018ABE";
 const MORNING_GLORY = "#97CADB";
 const BOTTICELLI = "#D6E8EE";
-
-window.onload = function () {
-  class Nodo {
-    constructor(count, symb, [a, b], digit) {
-      this.digit = digit;
-      this.count = count;
-      this.symb = symb;
-      this.children = [a, b];
-    }
+class Nodo {
+  constructor(count, symb, [a, b], digit) {
+    this.digit = digit;
+    this.count = count;
+    this.symb = symb;
+    this.children = [a, b];
   }
+}
+window.onload = function () {
 
-  var msg = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccddddddddddddddddeeeeeeeeefffff';
+  var msg = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora rem animi quisquam asperiores, sint porro veniam, officia mollitia accusantium autem voluptate? Vel ea modi corporis unde, recusandae porro magnam repellat.';
 
   buildCount = (msg) => {
     const obj = {};
     msg.split('').forEach(e => {
-      if (e == ' ')
-        e = 'esp';
       if (!obj[e]) obj[e] = 0;
       obj[e] += 1;
     });
@@ -36,7 +33,7 @@ window.onload = function () {
     });
 
     Object.entries(count).forEach(([k, v]) =>
-      pq.queue(new Nodo(v, k, [null, null], null))
+      pq.queue(new Nodo(v, k.charCodeAt(0), [null, null], null))
     );
 
     /*var size=pq.length;
@@ -59,13 +56,14 @@ window.onload = function () {
 
   var nodos = [];
   var links = [];
+  var hojas = [];
 
-  function dataSet(root, elements, edges) {
+  function dataSet(root, elements, edges, leafs) {
     if (root.children[0] == null) {
       elements.push({
         "data": {
           "id": root.symb,
-          "name": root.symb
+          "name": String.fromCharCode(root.symb)
         }
       });
     } else
@@ -83,7 +81,7 @@ window.onload = function () {
           "label": root.children[0].digit
         }
       });
-      dataSet(root.children[0], elements, edges);
+      dataSet(root.children[0], elements, edges, leafs);
     }
 
     if (root.children[1] != null) {
@@ -94,14 +92,18 @@ window.onload = function () {
           "label": root.children[1].digit
         }
       });
-      dataSet(root.children[1], elements, edges);
+      dataSet(root.children[1], elements, edges, leafs);
     }
 
-    return null;
+    if (root.children[0] == null && root.children[1] == null) {
+      leafs.push(root.symb);
+    }
+
+    return;
   }
 
   var arbol = buildTree(count);
-  dataSet(arbol, nodos, links);
+  dataSet(arbol, nodos, links, hojas);
 
   console.log(buildCount(msg));
   console.log(arbol);
@@ -149,9 +151,11 @@ window.onload = function () {
       name: 'dagre'
     }
   };
+
   var cy = cytoscape(config);
 
   colorear = (simbolo) => {
+    var fg = false;
     var aStar = cy.elements().aStar({
       root: arbol.symb,
       goal: "#" + simbolo
@@ -162,25 +166,75 @@ window.onload = function () {
     var i = 0;
 
     console.log(aStar.path.length);
-    var highlightNextEle = function () {
+    var i;
+    for (i = 0; i < aStar.path.length; i++)
       aStar.path[i].addClass('highlighted');
-      /*if(aStar.path[i]._private.data.label!=undefined)
-          console.log(aStar.path[i]._private.data.label.toString());*/
-      i++;
-      setTimeout(highlightNextEle, 500);
-    };
-    highlightNextEle();
+
+    setTimeout(() => {
+      for (i = 0; i < aStar.path.length; i++)
+        aStar.path[i].removeClass('highlighted');
+    }, 600);
+
+    //if (i > 1 && simbolo == aStar.path[i - 1]._private.data.id)
+    //setTimeout(()=>{cy = cytoscape(config)},1000 * i);
+
+    /*if(aStar.path[i]._private.data.label!=undefined)
+      console.log(aStar.path[i]._private.data.label.toString());*/
+
+    //setTimeout(highlightNextEle, 500*i);
+
+
+    //highlightNextEle();
+
   };
+  /* hojas.forEach((c) => {
+    var flg = true;
+    if (flg) {
+      flg = false;
+      setTimeout(() => {
+        flg = colorear(c);
+      }, 5000);
+    }
 
-  colorear("f");
+    cy = cytoscape(config);
+  }); */
 
-  setTimeout(() => {
+  var i = 0;
+  hojas.forEach((c) => {
+
+    let miPrimeraPromise = new Promise((resolve, reject) => {
+      if (task(i) == true)
+        resolve(true);
+      else
+        reject(error);
+    });
+
+    miPrimeraPromise.then(function (value) {
+      if (value == true) cy = cytoscape(config);
+    }, function (error) {
+      console.log("No puelo");
+    });
+
+    i++;
+  });
+
+  function task(i) {
+    setTimeout(function () {
+      colorear(hojas[i]);
+    }, 3000 * i);
+    return true;
+  }
+  /*setTimeout(() => {
+    cy = cytoscape(config);
+  }, 5000);*/
+
+  /*setTimeout(() => {
     cy = cytoscape(config);
   }, 5000);
 
   setTimeout(() => {
     colorear("c");
-  }, 5000);
+  }, 5000);*/
   /*
     let i = 0;
   
