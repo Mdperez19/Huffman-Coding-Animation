@@ -64,12 +64,6 @@ window.onload = function () {
         },
         {
           data: {
-            source: '3',
-            target: '4'
-          }
-        },
-        {
-          data: {
             source: '2',
             target: '1'
           }
@@ -111,6 +105,7 @@ window.onload = function () {
   setTimeout(function(){
     cy.remove(cy.$('#1'));
   },1000);
+
   setTimeout(function(){
     cy.add([{
       group: "nodes",
@@ -134,6 +129,23 @@ window.onload = function () {
     layout.run();
   },2000);
   
+  setTimeout(function(){
+    cy.add([
+    {
+      group: "edges",
+      data: {
+        id: '34',
+        source: '3',
+        target: '4'
+      }
+    }
+  ]);
+  
+  var layout = cy.layout({
+    name: 'dagre'
+  });
+    layout.run();
+  },4000);
 
   /*var cy = cytoscape({
       container: document.getElementById('cy'),
