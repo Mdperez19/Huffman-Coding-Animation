@@ -215,7 +215,7 @@ colorear = (simbolo) => {
     }
 
     $("#cuerpoTabla").append(`<tr>
-    <td class="animate__animated animate__fadeIn">${simbolo}</td>
+    <td class="animate__animated animate__fadeIn">${String.fromCharCode(simbolo)}</td>
     <td class="animate__animated animate__pulse">${codigo}</td>
     </tr>`);
 

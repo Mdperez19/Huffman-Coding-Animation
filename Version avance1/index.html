@@ -14,19 +14,8 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/animate.min.css">
-    <style>
-        #cy {
-            width: 100%;
-            height: 80vh;
-            display: block;
-        }
+    <link rel="stylesheet" href="css/type.css">
 
-        .grid_container {
-            display: grid;
-            grid-template-columns: 49% 49%;
-            grid-column-gap: 2%;
-        }
-    </style>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -57,9 +46,10 @@
                 <div class="row gx-5 justify-content-center" style="text-align: center;">
                     <div class="col-lg-8 col-xl-6">
                         <h1>Adquisición de Frecuencias</h1>
-                        <div class="justify-content-center">
-                            <input class="form-control w-100 " width="10%" id="cadena" type="cadena"
-                                placeholder="Por ejemplo 'perro'" style="text-align: center;">
+                        <div class="container bg-white">
+                            <div class="typewrite">
+                                <h2 class="align-text-top" id="cadena" style="text-align: center;">Cadena jijertei</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,7 +59,7 @@
                         <div class="card h-100 shadow border-0">
                             <div id="cy" class="card-body p-4 back animate__animated animate__fadeIn">
                                 <!--Aqui va el arbol-->
-                                
+
                             </div>
                         </div>
                     </div>
@@ -80,17 +70,17 @@
                                 <!--Aqui va las listas de la frecuencia-->
                                 <table id="tablaFrecuencias" class="table table-hover">
                                     <thead id="cabeceraTabla">
-                                        
-                                      </thead>
-                                      <tbody id="cuerpoTabla">
 
-                                      </tbody>
+                                    </thead>
+                                    <tbody id="cuerpoTabla">
+
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <button id = "Codi">Codificar</button>
-                    <button id = "Paths">Mostrar caminos</button>
+                    <button id="Codi">Codificar</button>
+                    <button id="Paths">Mostrar caminos</button>
                 </div>
             </div>
 
@@ -121,7 +111,6 @@
     <script src="js/util/cytoscape.min.js"></script>
     <script src="js/util/dagre.js"></script>
     <script src="js/script/arbol2.js"></script>
-    
     <script src="js/util/priority-queue.min.js"></script>
     <script src="js/util/typewriter.js"></script>
 </body>
