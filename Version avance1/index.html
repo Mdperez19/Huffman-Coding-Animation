@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Codificación Huffman</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/animate.min.css">
+    <style>
+        #cy {
+            width: 100%;
+            height: 80vh;
+            display: block;
+        }
+
+        .grid_container {
+            display: grid;
+            grid-template-columns: 49% 49%;
+            grid-column-gap: 2%;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" href="index.html">Introduce tu palabra</a>
+                <input class="form-control w-25 navbar-brand h-25" style="color:black;" id="cadena" type="cadena"
+                    placeholder="Por ejemplo 'perro'">
+                <a class="navbar-brand" href="index.html"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span
+                        class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <!--Aqui se introducen  las funciones para iniciar-->
+                        <li class="nav-item"><a class="nav-link" id="Iniciar" href="#">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Reiniciar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section id="Construccion" class="py-1">
+            <div class="container px-1 my-2">
+
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <div class="col-lg-8 col-xl-6">
+                        <h1>Adquisición de Frecuencias</h1>
+                        <div class="justify-content-center">
+                            <input class="form-control w-100 " width="10%" id="cadena" type="cadena"
+                                placeholder="Por ejemplo 'perro'" style="text-align: center;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-4 my-5">
+                    <div class="col-lg-6 mb-5">
+                        <div class="card h-100 shadow border-0">
+                            <div id="cy" class="card-body p-4 back animate__animated animate__fadeIn">
+                                <!--Aqui va el arbol-->
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-5">
+                        <div class="card h-100 shadow border-0">
+                            <div class="card-body p-4 back">
+                                <!--Aqui va las listas de la frecuencia-->
+                                <table id="tablaFrecuencias" class="table table-hover">
+                                    <thead id="cabeceraTabla">
+                                        
+                                      </thead>
+                                      <tbody id="cuerpoTabla">
+
+                                      </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <button id = "Codi">Codificar</button>
+                    <button id = "Paths">Mostrar caminos</button>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer-->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Copyright &copy; Gallos de Oro 2021</div>
+                </div>
+                <div class="col-auto">
+                    <p class="small m-0 text-white" href="#!">Codifiación Huffman</p>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/util/jquery-3.6.0.min.js"></script>
+    <script src="js/util/scripts.js"></script>
+    <script src="js/util/dagre2.js"></script>
+    <script src="js/util/cytoscape.min.js"></script>
+    <script src="js/util/dagre.js"></script>
+    <script src="js/script/arbol2.js"></script>
+    
+    <script src="js/util/priority-queue.min.js"></script>
+    <script src="js/util/typewriter.js"></script>
+</body>
+
+</html>

@@ -148,7 +148,8 @@ window.onload = function () {
     },
 
     layout: {
-      name: 'dagre'
+      name: 'dagre',
+      fit: true
     }
   };
 
@@ -195,7 +196,6 @@ window.onload = function () {
         flg = colorear(c);
       }, 5000);
     }
-
     cy = cytoscape(config);
   }); */
 
@@ -231,7 +231,6 @@ window.onload = function () {
   /*setTimeout(() => {
     cy = cytoscape(config);
   }, 5000);
-
   setTimeout(() => {
     colorear("c");
   }, 5000);*/
@@ -257,22 +256,17 @@ window.onload = function () {
       root: "#3",
       goal: "#5"
     });
-
     aStar.path.select();
     console.log(aStar.distance);
     var i = 0;
-
     console.log(aStar.path.length);
     var highlightNextEle = function () {
       aStar.path[i].addClass('highlighted');
-
       i++;
       setTimeout(highlightNextEle, 500);
     };
     highlightNextEle();
   }, 1000);
-
-
   setTimeout(function () {
     cy.remove(cy.$('#1'));
   }, 1000);
@@ -292,7 +286,6 @@ window.onload = function () {
       }
     }
     ]);
-
     var layout = cy.layout({
       name: 'dagre'
     });

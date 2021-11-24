@@ -12,10 +12,8 @@ class Nodo {
     }
 }
 
-class caracter
-{
-    constructor(char,valor)
-    {
+class caracter {
+    constructor(char, valor) {
         this.char = char;
         this.valor = valor;
     }
@@ -23,11 +21,13 @@ class caracter
 /********Variables globales**************** */
 var cy;
 var arbol
-var msg = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccddddddddddddddddeeeeeeeeefffff';
+var msg;
 var nodos = [];
 var links = [];
 var hojas = [];
+var codigos = [];
 var config;
+var count;
 /************************************************ */
 /**funciones********* */
 buildCount = (msg) => {
@@ -40,12 +40,18 @@ buildCount = (msg) => {
 }
 
 animationbuildTree = count => {
+    $("#cabeceraTabla").empty();
+    $("#cabeceraTabla").append(`<tr>
+        <th class="animate__animated animate__fadeIn" scope="col">Caracter</th>
+        <th class="animate__animated animate__fadeIn" scope="col">Frecuencia</th>
+    </tr>`);
+    $("#cuerpoTabla").empty();
     const pq = new PriorityQueue({
         comparator: function (a, b) {
             return a.count - b.count;
         }
     });
-    
+
     Object.entries(count).forEach(([k, v]) => {
         pq.queue(new Nodo(v, k.charCodeAt(0), [null, null], null));
         cy.add([{
@@ -58,6 +64,10 @@ animationbuildTree = count => {
         cy.layout({
             name: 'dagre'
         }).run();
+        $("#cuerpoTabla").append(`<tr>
+        <td class="animate__animated animate__fadeIn">${k}</td>
+        <td class="animate__animated animate__pulse">${v}</td>
+        </tr>`);
     });
     cy.remove(cy.$('#01'));
     /* var size = pq.length;
@@ -118,9 +128,9 @@ buildTree = count => {
         }
     });
 
-    Object.entries(count).forEach(([k, v]) =>
+    Object.entries(count).forEach(([k, v]) => {
         pq.queue(new Nodo(v, k.charCodeAt(0), [null, null], null))
-    );
+    });
 
     /*var size=pq.length;
     for (let i = 0; i < size; i++) {
@@ -195,9 +205,23 @@ colorear = (simbolo) => {
     var i = 0;
 
     console.log(aStar.path.length);
+
     var i;
-    for (i = 0; i < aStar.path.length; i++)
+    var codigo = '';
+    for (i = 0; i < aStar.path.length; i++) {
+        if (aStar.path[i]._private.data.label != undefined)
+            codigo = codigo + aStar.path[i]._private.data.label;
         aStar.path[i].addClass('highlighted');
+    }
+
+    $("#cuerpoTabla").append(`<tr>
+    <td class="animate__animated animate__fadeIn">${simbolo}</td>
+    <td class="animate__animated animate__pulse">${codigo}</td>
+    </tr>`);
+
+    console.log(codigo);
+
+    codigos[String.fromCharCode(simbolo)] = codigo;
 
     setTimeout(() => {
         for (i = 0; i < aStar.path.length; i++)
@@ -212,44 +236,38 @@ function task(i) {
     }, 3000 * i);
     return true;
 }
-function colorearTodas(){
-var i = 0;
-  hojas.forEach((c) => {
 
-    let miPrimeraPromise = new Promise((resolve, reject) => {
-      if (task(i) == true)
-        resolve(true);
-      else
-        reject(error);
+function colorearTodas() {
+    var i = 0;
+    $("#cabeceraTabla").empty();
+    $("#cabeceraTabla").append(`<tr>
+        <th class="animate__animated animate__fadeIn" scope="col">Caracter</th>
+        <th class="animate__animated animate__fadeIn" scope="col">Código</th>
+    </tr>`);
+    $("#cuerpoTabla").empty();
+    hojas.forEach((c) => {
+
+        let miPrimeraPromise = new Promise((resolve, reject) => {
+            if (task(i) == true)
+                resolve(true);
+            else
+                reject(error);
+        });
+
+        miPrimeraPromise.then(function (value) {
+            if (value == true) cy = cytoscape(config);
+        }, function (error) {
+            console.log("No puelo");
+        });
+
+        i++;
     });
-
-    miPrimeraPromise.then(function (value) {
-      if (value == true) cy = cytoscape(config);
-    }, function (error) {
-      console.log("No puelo");
-    });
-
-    i++;
-  });
 }
 
-function getTreeLeaves(tree, prefix = '') {
-    if (tree.symb) return { symb: tree.symb, word: prefix };
-    const leaves = [];
-    [0, 1].forEach(i => {
-      const child = tree.children[i];
-      leaves.push(getTreeLeaves(child, prefix + child.digit));
-    });
-    return leaves.flat();
-}
-
-buildDict = tree => {
-    const arr = getTreeLeaves(tree);
-    return Object.fromEntries(arr.map(e => [e.symb, e.word]));
-  }
 /********************************************************** */
-window.onload = function () {
-
+$("#Iniciar").click(function () {
+    $("#cy").empty();
+    msg = $('#cadena').val();
 
     cy = cytoscape({
         container: document.getElementById('cy'),
@@ -344,24 +362,47 @@ window.onload = function () {
         }
     };
 
-    var count = buildCount(msg);
+    count = buildCount(msg);
 
     arbol = animationbuildTree(count);
     console.log(buildCount(msg));
     console.log(count);
 
-    setTimeout(()=>{
-        arbol = buildTree(count);
-        dataSet(arbol, nodos, links, hojas);
-        cy = cytoscape(config);
-        cy.layout({
-            name: 'dagre'
-        }).run();
-        colorearTodas();
-    },30000);
-    
-    window.addEventListener('resize', function () {
-        cy.resize();
-        cy.fit();
+    /*setTimeout(() => {
+        
+    }, 10500);
+
+    setTimeout(() => {
+        Object.entries(codigos).forEach(([k, v]) =>
+        console.log('Char: ' + k + '- Codigo: ' + v)
+    );
+}, 10501);*/
+});
+
+
+$('#Codi').click(() => {
+    $("#cy").empty();
+    arbol = buildTree(count);
+    dataSet(arbol, nodos, links, hojas);
+    cy = cytoscape(config);
+    cy.layout({
+        name: 'dagre'
+    }).run();
+    colorearTodas();
+
+    if (codigos.length == count.length)
+        Object.entries(codigos).forEach(([k, v]) =>
+            console.log('Char: ' + k + '- Codigo: ' + v)
+        );
+});
+
+/*$('#Paths').click(() => {
+    Object.entries(codigos).forEach(([k, v]) => {
+        console.log('Char: ' + k + '- Codigo: ' + v)
     });
-};
+});*/
+
+window.addEventListener('resize', function () {
+    cy.resize();
+    cy.fit();
+});

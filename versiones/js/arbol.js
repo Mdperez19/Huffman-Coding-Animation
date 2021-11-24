@@ -61,18 +61,6 @@ window.onload = function () {
             source: '3',
             target: '2'
           }
-        },
-        {
-          data: {
-            source: '2',
-            target: '1'
-          }
-        },
-        {
-          data: {
-            source: '4',
-            target: '5'
-          }
         }
       ]
     },
