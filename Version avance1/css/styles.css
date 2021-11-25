@@ -80,11 +80,19 @@
   background-color:#f7fcfd;
 }
 
+.foo{
+  display: flex;
+  align-items: center;
+}
+
+@font-face {
+  font-family: Quicksand-Medium;
+  src: url(../fonts/static/Quicksand-Medium.ttf) format("truetype");
+}
+
 body {
   margin: 0;
-  font-family: var(--bs-body-font-family);
-  font-size: var(--bs-body-font-size);
-  font-weight: var(--bs-body-font-weight);
+  font-family: Quicksand-Medium;
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
   text-align: var(--bs-body-text-align);

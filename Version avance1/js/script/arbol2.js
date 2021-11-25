@@ -3,6 +3,8 @@ const REGAL_BLUE = "#02457A";
 const BONDI_BLUE = "#018ABE";
 const MORNING_GLORY = "#97CADB";
 const BOTTICELLI = "#D6E8EE";
+
+/*************Estructuras************************ */
 class Nodo {
     constructor(count, symb, [a, b], digit) {
         this.digit = digit;
@@ -11,13 +13,7 @@ class Nodo {
         this.children = [a, b];
     }
 }
-
-class caracter {
-    constructor(char, valor) {
-        this.char = char;
-        this.valor = valor;
-    }
-}
+/************************************************ */
 /********Variables globales**************** */
 var cy;
 var arbol
@@ -29,7 +25,7 @@ var codigos = [];
 var config;
 var count;
 /************************************************ */
-/**funciones********* */
+/************************funciones*************** */
 buildCount = (msg) => {
     const obj = {};
     msg.split('').forEach(e => {
@@ -117,7 +113,7 @@ animationbuildTree = count => {
         id++;
         setTimeout(loop, 1000);
     }
-    setTimeout(loop, 3000);
+    setTimeout(loop, 3050);
 
 }
 
@@ -214,8 +210,9 @@ colorear = (simbolo) => {
         aStar.path[i].addClass('highlighted');
     }
 
-    $("#cuerpoTabla").append(`<tr>
+    $("#cuerpoTabla2").append(`<tr>
     <td class="animate__animated animate__fadeIn">${String.fromCharCode(simbolo)}</td>
+    <td class="animate__animated animate__pulse">${simbolo}</td>
     <td class="animate__animated animate__pulse">${codigo}</td>
     </tr>`);
 
@@ -239,12 +236,13 @@ function task(i) {
 
 function colorearTodas() {
     var i = 0;
-    $("#cabeceraTabla").empty();
-    $("#cabeceraTabla").append(`<tr>
+    $("#cabeceraTabla2").empty();
+    $("#cabeceraTabla2").append(`<tr>
         <th class="animate__animated animate__fadeIn" scope="col">Caracter</th>
+        <th class="animate__animated animate__fadeIn" scope="col"># ASCII</th>
         <th class="animate__animated animate__fadeIn" scope="col">Código</th>
     </tr>`);
-    $("#cuerpoTabla").empty();
+    $("#cuerpoTabla2").empty();
     hojas.forEach((c) => {
 
         let miPrimeraPromise = new Promise((resolve, reject) => {
@@ -266,8 +264,17 @@ function colorearTodas() {
 
 /********************************************************** */
 $("#Iniciar").click(function () {
-    $("#cy").empty();
+
     msg = $('#cadena').val();
+
+    var typew = document.getElementById('typew');
+
+    var typewriter = new Typewriter(typew, {
+        loop: false,
+        delay: 500
+    });
+
+    typewriter.typeString(msg).start();
 
     cy = cytoscape({
         container: document.getElementById('cy'),
@@ -320,8 +327,30 @@ $("#Iniciar").click(function () {
         }
     });
 
+
+
+    count = buildCount(msg);
+
+    arbol = animationbuildTree(count);
+    console.log(buildCount(msg));
+    console.log(count);
+
+    /*setTimeout(() => {
+        
+    }, 10500);
+
+    setTimeout(() => {
+        Object.entries(codigos).forEach(([k, v]) =>
+        console.log('Char: ' + k + '- Codigo: ' + v)
+    );
+}, 10501);*/
+});
+
+
+$('#Codi').click(() => {
+    $("#cy2").empty();
     config = {
-        container: document.getElementById('cy'),
+        container: document.getElementById('cy2'),
 
         boxSelectionEnabled: false,
         autounselectify: true,
@@ -361,27 +390,6 @@ $("#Iniciar").click(function () {
             name: 'dagre'
         }
     };
-
-    count = buildCount(msg);
-
-    arbol = animationbuildTree(count);
-    console.log(buildCount(msg));
-    console.log(count);
-
-    /*setTimeout(() => {
-        
-    }, 10500);
-
-    setTimeout(() => {
-        Object.entries(codigos).forEach(([k, v]) =>
-        console.log('Char: ' + k + '- Codigo: ' + v)
-    );
-}, 10501);*/
-});
-
-
-$('#Codi').click(() => {
-    $("#cy").empty();
     arbol = buildTree(count);
     dataSet(arbol, nodos, links, hojas);
     cy = cytoscape(config);

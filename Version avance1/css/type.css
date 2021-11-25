@@ -1,8 +1,19 @@
 .Typewriter__cursor {
-    color: #001B48;
+    color: #018ABE;
 }
 
-#cy {
+#cy
+{
+    width: 100%;
+    height: 75vh;
+    display: block;
+}
+
+#tabla{
+    height: 75vh;
+}
+
+#cy2 {
     width: 100%;
     height: 80vh;
     display: block;

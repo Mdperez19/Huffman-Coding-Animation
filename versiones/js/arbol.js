@@ -135,7 +135,7 @@ window.onload = function () {
     layout.run();
   },4000);
 
-  /*var cy = cytoscape({
+  /*var cy = cytoscape({ es el mismo bro xdxd
       container: document.getElementById('cy'),
     
       boxSelectionEnabled: false,
