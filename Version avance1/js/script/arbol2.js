@@ -284,7 +284,8 @@ colorearDeco = (simbolo) => {
         aStar.path[i].addClass('highlighted');
     }
 
-    document.getElementById("msgCod").innerHTML += simbolo;
+    //document.getElementById("msgCod").innerHTML += String.fromCharCode(simbolo);
+
 
     setTimeout(() => {
         for (i = 0; i < aStar.path.length; i++)
@@ -295,14 +296,13 @@ colorearDeco = (simbolo) => {
 
 function taskDeco(i) {
     setTimeout(function () {
-        colorearDeco(hojas[i]);
+        colorearDeco(msg[i].charCodeAt(0));
     }, 3000 * i);
     return true;
 }
 
 function colorearTodasDeco() {
-    var i = 0;
-    hojas.forEach((c) => {
+    for (var i = 0; i < msg.length; i++) {
 
         let miPrimeraPromise = new Promise((resolve, reject) => {
             if (taskDeco(i) == true)
@@ -316,9 +316,7 @@ function colorearTodasDeco() {
         }, function (error) {
             console.log("No puelo");
         });
-
-        i++;
-    });
+    }
 }
 
 /********************************************************** */
@@ -470,7 +468,7 @@ $('#Codi').click(() => {
 $('#CodiM').click(() => {
     ///  1011011010101001
     //eliminar boton
-    $("#CodiM").remove(); 
+    $("#CodiM").remove();
     var typew = document.getElementById('typecode');
 
     for (var i = 0; i < msg.length; i++) {
@@ -497,9 +495,9 @@ $('#CodiM').click(() => {
             labels: ['Mensaje original', 'Codificación'],
             datasets: [{
                 label: '# de Bytes',
-                data: [(msg.length)*8, (msgCodi.length)/8],
+                data: [(msg.length) * 8, (msgCodi.length) / 8],
                 backgroundColor: [
-                    BONDI_BLUE,//REGAL_BLUE
+                    BONDI_BLUE, //REGAL_BLUE
                     BOTTICELLI //MORNING_GLORY
                 ],
                 borderColor: [
@@ -518,16 +516,17 @@ $('#CodiM').click(() => {
         }
     });
 
-    var porcentaje = 100 - ((msgCodi.length/8)*100)/(msg.length*8);
-    document.getElementById("porcentaje").innerHTML = "Porcentaje de compresión: " + porcentaje + "%";
+    var porcentaje = 100 - ((msgCodi.length / 8) * 100) / (msg.length * 8);
+    document.getElementById("porcentaje").innerHTML = "Porcentaje de compresión: " + porcentaje.toFixed(3) + "%";
 
 });
 
-$('#Deco').click(() => {
+$('#DecoM').click(() => {
     //eliminar boton
-    $("#Deco").remove();
+    $("#DecoM").remove();
     $("#cy3").empty();
-    document.getElementById("msgCod").innerHTML = msgCodi;
+
+    //document.getElementById("msgCod").innerHTML = msgCodi;
     config = {
         container: document.getElementById('cy3'),
 
@@ -570,12 +569,20 @@ $('#Deco').click(() => {
         }
     };
 
-    arbol = buildTree(count);
-    dataSet(arbol, nodos, links, hojas);
     cy = cytoscape(config);
     cy.layout({
         name: 'dagre'
     }).run();
+
+    var typew = document.getElementById('typeDeco');
+    var typewriter = new Typewriter(typew, {
+        loop: false,
+        delay: 200
+    });
+
+    for (var i = 0; i < msg.length; i++) {
+        typewriter.pauseFor(500).typeString(codigos[msg[i]]).pauseFor(500).deleteChars(codigos[msg[i]].length).typeString('<strong>' + msg[i] + '</strong>').start();
+    }
     colorearTodasDeco();
 
     if (codigos.length == count.length)
