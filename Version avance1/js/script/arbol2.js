@@ -495,7 +495,7 @@ $('#CodiM').click(() => {
             labels: ['Mensaje original', 'Codificación'],
             datasets: [{
                 label: '# de Bytes',
-                data: [(msg.length) * 8, (msgCodi.length) / 8],
+                data: [(msg.length), (msgCodi.length) / 8],
                 backgroundColor: [
                     BONDI_BLUE, //REGAL_BLUE
                     BOTTICELLI //MORNING_GLORY
@@ -516,7 +516,7 @@ $('#CodiM').click(() => {
         }
     });
 
-    var porcentaje = 100 - ((msgCodi.length / 8) * 100) / (msg.length * 8);
+    var porcentaje = 100 - ((msgCodi.length / 8) * 100) / (msg.length);
     document.getElementById("porcentaje").innerHTML = "Porcentaje de compresión: " + porcentaje.toFixed(3) + "%";
 
 });
