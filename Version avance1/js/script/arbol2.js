@@ -24,6 +24,7 @@ var hojas = [];
 var codigos = [];
 var config;
 var count;
+var msgCodi = "";
 /************************************************ */
 /************************funciones*************** */
 buildCount = (msg) => {
@@ -262,8 +263,68 @@ function colorearTodas() {
     });
 }
 
+colorearDeco = (simbolo) => {
+    var fg = false;
+    var aStar = cy.elements().aStar({
+        root: arbol.symb,
+        goal: "#" + simbolo
+    });
+
+    aStar.path.select();
+    console.log(aStar.distance);
+    var i = 0;
+
+    console.log(aStar.path.length);
+
+    var i;
+    var codigo = '';
+    for (i = 0; i < aStar.path.length; i++) {
+        if (aStar.path[i]._private.data.label != undefined)
+            codigo = codigo + aStar.path[i]._private.data.label;
+        aStar.path[i].addClass('highlighted');
+    }
+
+    document.getElementById("msgCod").innerHTML += simbolo;
+
+    setTimeout(() => {
+        for (i = 0; i < aStar.path.length; i++)
+            aStar.path[i].removeClass('highlighted');
+    }, 600);
+};
+
+
+function taskDeco(i) {
+    setTimeout(function () {
+        colorearDeco(hojas[i]);
+    }, 3000 * i);
+    return true;
+}
+
+function colorearTodasDeco() {
+    var i = 0;
+    hojas.forEach((c) => {
+
+        let miPrimeraPromise = new Promise((resolve, reject) => {
+            if (taskDeco(i) == true)
+                resolve(true);
+            else
+                reject(error);
+        });
+
+        miPrimeraPromise.then(function (value) {
+            if (value == true) cy = cytoscape(config);
+        }, function (error) {
+            console.log("No puelo");
+        });
+
+        i++;
+    });
+}
+
 /********************************************************** */
 $("#Iniciar").click(function () {
+    //borrar
+    $("#Iniciar").remove();
 
     msg = $('#cadena').val();
 
@@ -348,6 +409,8 @@ $("#Iniciar").click(function () {
 
 
 $('#Codi').click(() => {
+    //eliminar boton
+    $("#Codi").remove();
     $("#cy2").empty();
     config = {
         container: document.getElementById('cy2'),
@@ -397,6 +460,123 @@ $('#Codi').click(() => {
         name: 'dagre'
     }).run();
     colorearTodas();
+
+    if (codigos.length == count.length)
+        Object.entries(codigos).forEach(([k, v]) =>
+            console.log('Char: ' + k + '- Codigo: ' + v)
+        );
+});
+
+$('#CodiM').click(() => {
+    ///  1011011010101001
+    //eliminar boton
+    $("#CodiM").remove(); 
+    var typew = document.getElementById('typecode');
+
+    for (var i = 0; i < msg.length; i++) {
+        //    10101    '10101'
+        msgCodi = msgCodi + codigos[msg[i]];
+    }
+
+    console.log("Longitud cod bytes: " + (msgCodi.length) / 8);
+    console.log("Longitud msg bytes: " + (msg.length) * 8);
+
+    var typewriter = new Typewriter(typew, {
+        loop: false,
+        delay: 200
+    });
+
+    for (var i = 0; i < msg.length; i++) {
+        typewriter.pauseFor(1000).typeString(msg[i]).pauseFor(1000).deleteChars(1).typeString('<strong>' + codigos[msg[i]] + '</strong>').start();
+    }
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Mensaje original', 'Codificación'],
+            datasets: [{
+                label: '# de Bytes',
+                data: [(msg.length)*8, (msgCodi.length)/8],
+                backgroundColor: [
+                    BONDI_BLUE,//REGAL_BLUE
+                    BOTTICELLI //MORNING_GLORY
+                ],
+                borderColor: [
+                    REGAL_BLUE, //STRATOS
+                    MORNING_GLORY //BONDI_BLUE
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var porcentaje = 100 - ((msgCodi.length/8)*100)/(msg.length*8);
+    document.getElementById("porcentaje").innerHTML = "Porcentaje de compresión: " + porcentaje + "%";
+
+});
+
+$('#Deco').click(() => {
+    //eliminar boton
+    $("#Deco").remove();
+    $("#cy3").empty();
+    document.getElementById("msgCod").innerHTML = msgCodi;
+    config = {
+        container: document.getElementById('cy3'),
+
+        boxSelectionEnabled: false,
+        autounselectify: true,
+
+
+        style: cytoscape.stylesheet()
+            .selector('node')
+            .style({
+                'content': 'data(name)',
+                'background-color': BONDI_BLUE,
+            })
+            .selector('edge')
+            .style({
+                'curve-style': 'bezier',
+                'target-arrow-shape': 'triangle',
+                'width': 4,
+                'line-color': BOTTICELLI,
+                'target-arrow-color': BOTTICELLI,
+                'label': 'data(label)'
+            })
+            .selector('.highlighted')
+            .style({
+                'background-color': REGAL_BLUE,
+                'line-color': REGAL_BLUE,
+                'target-arrow-color': REGAL_BLUE,
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            }),
+
+        elements: {
+            nodes: nodos,
+
+            edges: links
+        },
+
+        layout: {
+            name: 'dagre'
+        }
+    };
+
+    arbol = buildTree(count);
+    dataSet(arbol, nodos, links, hojas);
+    cy = cytoscape(config);
+    cy.layout({
+        name: 'dagre'
+    }).run();
+    colorearTodasDeco();
 
     if (codigos.length == count.length)
         Object.entries(codigos).forEach(([k, v]) =>

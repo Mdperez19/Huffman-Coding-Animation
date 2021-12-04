@@ -25,7 +25,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-5">
-                <a class="navbar-brand" href="index.html">Introduce tu palabra</a>
+                <a class="navbar-brand" href="index.html">Introduce tu mensaje</a>
                 <input class="form-control w-25 navbar-brand h-25" style="color:black;" id="cadena" type="cadena"
                     placeholder="Por ejemplo 'perro'">
                 <a class="navbar-brand" href="index.html"></a>
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row gx-4 my-5 mb-1">
                     <div class="col-lg-6 mb-1">
                         <div id="divArbol" class="card shadow border-0">
@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="col-lg-6 mb-1">
-                        <div id = "tabla" class="card h-100 shadow border-0">
+                        <div id="tabla" class="card h-100 shadow border-0">
                             <div class="card-body p-4 back h-100">
                                 <!--Aqui va las listas de la frecuencia-->
                                 <table id="tablaFrecuencias" class="table table-hover" style="text-align:center;">
@@ -82,13 +82,14 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="row gx-5 justify-content-center" style="text-align: center;">
-                    <a class="btn btn-primary btn-lg px-4 me-sm-3 w-25 " id="Codi" href="#Construccion">Codificar</a>
-                </div>      
+                    <a class="btn btn-primary btn-lg px-4 me-sm-3 w-25 " id="Codi" href="#Construccion">Construir
+                        códigos</a>
+                </div>
             </div>
-                
+
         </section>
 
 
@@ -126,26 +127,104 @@
                             </div>
                         </div>
                     </div>
-                    
+
+                    <div class="row gx-5 justify-content-center" style="text-align: center;">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3 w-25 " id="CodiM"
+                            href="#Codificacion">Codificar</a>
+                    </div>
                 </div>
             </div>
-
         </section>
 
+        <section id="Codificacion" class="py-1 aos-item" data-aos="fade-right">
+            <div class="container px-1 my-2">
+
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <div class="col-lg-8 col-xl-6">
+                        <h1>Codificación de mensaje</h1>
+                    </div>
+                </div>
+
+                <div class="row gx-4 my-5">
+                    <div class="col-lg-6 mb-5">
+                        <div id="divCodigo" class="card h-100 shadow border-0 typewrite">
+                            <div class="card-body p-4 back animate__animated animate__fadeIn">
+                                <!--Aqui va el mensaje codificado-->
+                                <h1 id="typecode"></h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-5">
+                        <div class="card h-100 shadow border-0">
+                            <div class="card-body p-4 back">
+                                <!--Aqui van las estadisticas de codifiación-->
+                                <canvas id="myChart" width="400" height="400"></canvas>
+                                <div class="divPorcentaje">
+                                    <h2 class="align-text-top" id="porcentaje"></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <a class="btn btn-primary btn-lg px-4 me-sm-3 w-25 " id="CodiM"
+                        href="#Decodificacion">Decodificar</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="Decodificacion" class="py-1 aos-item" data-aos="fade-right">
+            <div class="container px-1 my-2">
+
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <div class="col-lg-8 col-xl-6">
+                        <h1>Decodificacion</h1>
+                    </div>
+                </div>
+
+                <div class="row gx-4 my-5">
+                    <div class="col-lg-6 mb-5">
+                        <div id="divArbol" class="card h-100 shadow border-0">
+                            <div id="cy3" class="card-body p-4 back animate__animated animate__fadeIn">
+                                <!--Aqui va el arbol-->
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-5">
+                        <div class="card h-100 shadow border-0">
+                            <div class="card-body p-4 back">
+                                <!--Aqui va el mensaje decodificado-->
+                                <div class="divCod">
+                                    <h2 class="align-text-top" id="msgCod"></h2>
+                                </div>
+                                <div class="divDeco">
+                                    <h2 class="align-text-top" id="msgDeco"></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer-->
     <footer class="bg-dark py-1 mt-auto">
         <div class="container px-1">
             <div class="row align-items-center justify-content-between flex-column flex-sm-row foo">
-                <div class = "col-auto foo">
+                <div class="col-auto foo">
                     <img src="img/gallo.png" style="width: 8%;">
                     <div class="small m-0 text-white m-1">Copyright &copy; Gallos de Oro 2021</div>
                 </div>
-               
+
                 <div class="col-auto">
                     <a class="small m-0 text-white" href="#">Codificación Huffman</a>
-                    
+
                 </div>
             </div>
         </div>
@@ -162,11 +241,14 @@
     <script src="js/util/priority-queue.min.js"></script>
     <script src="js/util/typewriter.js"></script>
     <script src="js/util/aos.js"></script>
-        <script>
-            AOS.init({
-              easing: 'ease-in-out-sine'
-            });
-          </script>
+    <script>
+        AOS.init({
+            easing: 'ease-in-out-sine'
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    </script>
 </body>
 
 </html>
