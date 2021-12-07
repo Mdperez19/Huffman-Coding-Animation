@@ -99,6 +99,7 @@ body {
   background-color: #d6e8ee;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  overflow-x:hidden;
 }
 
 hr {
@@ -11381,23 +11382,69 @@ html {
   text-align: center;
 }
 
+#Burbujatexto{
+  margin-left: 1.5rem;
+}
+
 #Burbuja{
   color:white;
   text-align: left;
 }
 
-#Burbuja p { font-size: .55rem; }
-
-@media (min-width: 576px) {
-  #Burbuja p{ font-size: .6rem; }
-}
-@media (min-width: 768px) {
-  #Burbuja  p{ font-size: .65rem; }
-}
-@media (min-width: 992px) {
-  #Burbuja  p{ font-size: .7rem; }
-}
-@media (min-width: 1200px) {
-  #Burbuja  p{ font-size: .75rem; }
+@media only screen and (max-width: 600px) {
+  .burbuja{
+    width: 50%;
+    height: 20rem;
+  }
+  
+  #Burbuja p{
+    font-size: 0.8rem;
+  }
 }
 
+
+@media only screen and (min-width: 600px) {
+
+  
+  .burbuja{
+    width: 45%;
+    height: 20rem;
+  }
+  
+  #Burbuja p{
+    font-size: 0.8rem;
+  }
+}
+
+
+@media only screen and (min-width: 768px) {
+  .burbuja{
+    width: 35%;
+  }
+  
+  #Burbuja p{
+    font-size: 0.8rem;
+  }
+}
+
+
+@media only screen and (min-width: 992px) {
+  
+  .burbuja{
+    width: 35%;
+  }
+  
+  #Burbuja p{
+    font-size: 0.8rem;
+  }
+}
+
+
+@media only screen and (min-width: 1200px) {
+  .burbuja{
+    width: 26%;
+  }
+  #Burbuja p{
+    font-size: 0.9rem;
+  }
+}
