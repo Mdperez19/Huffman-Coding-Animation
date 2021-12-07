@@ -11386,4 +11386,18 @@ html {
   text-align: left;
 }
 
+#Burbuja p { font-size: .55rem; }
+
+@media (min-width: 576px) {
+  #Burbuja p{ font-size: .6rem; }
+}
+@media (min-width: 768px) {
+  #Burbuja  p{ font-size: .65rem; }
+}
+@media (min-width: 992px) {
+  #Burbuja  p{ font-size: .7rem; }
+}
+@media (min-width: 1200px) {
+  #Burbuja  p{ font-size: .75rem; }
+}
 

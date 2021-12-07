@@ -15,9 +15,10 @@ class Nodo {
 }
 /************************************************ */
 /********Variables globales**************** */
-var cy;
+
 var cy1;
 var cy2;
+var cy;
 var arbol
 var msg;
 var nodos = [];
