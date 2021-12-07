@@ -16,6 +16,8 @@ class Nodo {
 /************************************************ */
 /********Variables globales**************** */
 var cy;
+var cy1;
+var cy2;
 var arbol
 var msg;
 var nodos = [];
@@ -51,14 +53,14 @@ animationbuildTree = count => {
 
     Object.entries(count).forEach(([k, v]) => {
         pq.queue(new Nodo(v, k.charCodeAt(0), [null, null], null));
-        cy.add([{
+        cy1.add([{
             group: "nodes",
             "data": {
                 "id": k.charCodeAt(0),
                 "name": k
             }
         }]);
-        cy.layout({
+        cy1.layout({
             name: 'dagre'
         }).run();
         $("#cuerpoTabla").append(`<tr>
@@ -66,7 +68,7 @@ animationbuildTree = count => {
         <td class="animate__animated animate__pulse">${v}</td>
         </tr>`);
     });
-    cy.remove(cy.$('#01'));
+    cy1.remove(cy1.$('#01'));
     /* var size = pq.length;
     for (let i = 0; i < size; i++) {
         console.log(pq.dequeue());
@@ -82,7 +84,7 @@ animationbuildTree = count => {
         var value = a.count + b.count;
         pq.queue(new Nodo(value, 'a' + id, [a, b], null));
 
-        cy.add([{
+        cy1.add([{
                 group: "nodes",
                 "data": {
                     "id": 'a' + id,
@@ -105,12 +107,12 @@ animationbuildTree = count => {
             }
         ]);
 
-        cy.layout({
+        cy1.layout({
             name: 'dagre'
         }).run();
 
-        cy.resize();
-        cy.fit();
+        cy1.resize();
+        cy1.fit();
         id++;
         setTimeout(loop, 1000);
     }
@@ -192,7 +194,7 @@ function dataSet(root, elements, edges, leafs) {
 
 colorear = (simbolo) => {
     var fg = false;
-    var aStar = cy.elements().aStar({
+    var aStar = cy2.elements().aStar({
         root: arbol.symb,
         goal: "#" + simbolo
     });
@@ -254,7 +256,7 @@ function colorearTodas() {
         });
 
         miPrimeraPromise.then(function (value) {
-            if (value == true) cy = cytoscape(config);
+            if (value == true) cy2 = cytoscape(config);
         }, function (error) {
             console.log("No puelo");
         });
@@ -335,7 +337,7 @@ $("#Iniciar").click(function () {
 
     typewriter.typeString(msg).start();
 
-    cy = cytoscape({
+    cy1 = cytoscape({
         container: document.getElementById('cy'),
 
         boxSelectionEnabled: false,
@@ -453,8 +455,8 @@ $('#Codi').click(() => {
     };
     arbol = buildTree(count);
     dataSet(arbol, nodos, links, hojas);
-    cy = cytoscape(config);
-    cy.layout({
+    cy2 = cytoscape(config);
+    cy2.layout({
         name: 'dagre'
     }).run();
     colorearTodas();
@@ -598,6 +600,11 @@ $('#DecoM').click(() => {
 });*/
 
 window.addEventListener('resize', function () {
+    cy1.resize();
+    cy1.fit();
+    cy2.resize();
+    cy2.fit();
     cy.resize();
     cy.fit();
+    //hacer que las tres gráficas sean globales
 });
