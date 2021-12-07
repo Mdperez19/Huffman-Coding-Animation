@@ -17,7 +17,8 @@
     <link href="css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/type.css">
-
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -42,6 +43,23 @@
                 </div>
             </div>
         </nav>
+
+        <!--La Burbujita-->
+        <div class="container px-1 my-2 mb-1">
+            <div id="Burbujita" style="display:none;" class="container px-1 my-2 mb-1">
+                <div class="inf">
+                    <div id="Burbuja" class="burbuja"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container px-1 my-2 mb-1">
+            <div class="infiz">
+                <button class="circulo" onclick="ocultar();">?</button>
+                <!--<input type="button" id="Boton" class="circulo" onclick="ocultar();" value="Mostrar">-->
+            </div>
+        </div>
+
 
         <section id="Adquisicion" class="py-1">
             <div class="container px-1 my-2 mb-1">
@@ -94,16 +112,16 @@
 
 
         <section id="Construccion" class="py-1 aos-item" data-aos="fade-right">
-            <div class="container px-1 my-2">
+            <div class="container px-1 my-1">
 
                 <div class="row gx-5 justify-content-center" style="text-align: center;">
-                    <div class="col-lg-8 col-xl-6">
+                    <div class="col-lg-8 col-xl-6 mb-1">
                         <h1>Construcción de códigos</h1>
                     </div>
                 </div>
 
-                <div class="row gx-4 my-5">
-                    <div class="col-lg-6 mb-5">
+                <div class="row gx-4 my-2">
+                    <div class="col-lg-6 mb-2">
                         <div id="divArbol" class="card h-100 shadow border-0">
                             <div id="cy2" class="card-body p-4 back animate__animated animate__fadeIn">
                                 <!--Aqui va el arbol-->
@@ -112,7 +130,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-2">
                         <div class="card h-100 shadow border-0">
                             <div class="card-body p-4 back">
                                 <!--Aqui va las listas de la frecuencia-->
@@ -145,8 +163,8 @@
                     </div>
                 </div>
 
-                <div class="row gx-4 my-5">
-                    <div class="col-lg-6 mb-5">
+                <div class="row gx-4 my-2">
+                    <div class="col-lg-6 mb-2">
                         <div id="divCodigo" class="card h-100 shadow border-0 typewrite">
                             <div class="card-body p-4 back animate__animated animate__fadeIn">
                                 <!--Aqui va el mensaje codificado-->
@@ -155,7 +173,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-2">
                         <div class="card h-100 shadow border-0">
                             <div class="card-body p-4 back">
                                 <!--Aqui van las estadisticas de codifiación-->
@@ -185,8 +203,8 @@
                     </div>
                 </div>
 
-                <div class="row gx-4 my-5">
-                    <div class="col-lg-6 mb-5">
+                <div class="row gx-4 my-1">
+                    <div class="col-lg-6 mb-3">
                         <div id="divArbol" class="card h-100 shadow border-0">
                             <div id="cy3" class="card-body p-4 back animate__animated animate__fadeIn">
                                 <!--Aqui va el arbol-->
@@ -195,7 +213,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-6 mb-3">
                         <div class="card h-100 shadow border-0">
                             <div class="card-body p-4 back">
                                 <!--Aqui va el mensaje decodificado-->
@@ -236,12 +254,14 @@
     <script src="js/util/priority-queue.min.js"></script>
     <script src="js/util/typewriter.js"></script>
     <script src="js/util/aos.js"></script>
+    <script src="js/util/scripts.js"></script>
     <script>
         AOS.init({
             easing: 'ease-in-out-sine'
         });
     </script>
     <script src="js/util/chart.js"></script>
+    <script type="text/javascript" src="js/util/materialize.min.js"></script>
 
     </script>
 </body>
