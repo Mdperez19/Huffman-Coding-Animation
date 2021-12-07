@@ -10,6 +10,20 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ /* @media (max-width: 768px) {
+  body {
+    transform: rotate(-90deg);
+    transform-origin: bottom right;
+    position: absolute;
+    top: -10vmax;
+    left: -10vmax;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    overflow: auto;
+  }
+} */
+ 
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -11407,7 +11421,7 @@ html {
 
   
   .burbuja{
-    width: 45%;
+    width: 45.5%;
     height: 20rem;
   }
   
@@ -11447,4 +11461,27 @@ html {
   #Burbuja p{
     font-size: 0.9rem;
   }
+}
+
+.celular{
+  display: none;
+}
+
+.mensaje{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+@media only screen and (orientation:portrait) {
+  .todo { display:none; }
+  .celular{ 
+    display:block;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+  }
+}
+@media only screen and (orientation:landscape) {
+  .celular { display:none; }
 }

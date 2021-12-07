@@ -6,12 +6,13 @@
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
 
+
+
 window.onload = document.getElementById("Burbujatexto").innerHTML = "<h5>Codificación Huffman</h5><p>El algoritmo de Huffman es un algoritmo para la compresión de archivos o texto. Este algoritmo es greedy ya que junta cada mini árbol de los cuales son el resultado de realizar la suma de las frecuencias entre dos arboles hasta generar un solo árbol considerado como la solución óptima, ya que dicho árbol contiene las codificaciones para cada caracter único. ¿Qué esperas? ¡Introduce tu mensaje y comienza a utilizarlo! <i class='bi bi-emoji-wink-fill'</i></p>";
 
 window.onscroll = function(){
   cambiarTexto(); 
 };
-
 
 function cambiarTexto(){
     
