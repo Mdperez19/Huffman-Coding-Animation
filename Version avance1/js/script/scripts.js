@@ -32,11 +32,11 @@ function cambiarTexto(){
     }
 
     else if(pos > 1001 && pos<1599){
-        document.getElementById("Burbuja").innerHTML = "<h5>¿Qué pasa con la codificación?</h5><p>Una vez que tenemos los códigos correspondientes a nuestros caracteres, sustituiremos cada caracter por su código que obtuvimos en la sección de construcción de códigos, además podemos ver el porcentaje de compresión en bytes de nuestro texto original. El recorrido para el árbol toma en su peor caso es O(tamaño de la cadena 0 y 1).</p>";
+        document.getElementById("Burbuja").innerHTML = "<h5>¿Qué pasa con la codificación?</h5><p>Una vez que tenemos los códigos correspondientes a nuestros caracteres, sustituiremos cada caracter por su código que obtuvimos en la sección de construcción de códigos, además podemos ver el porcentaje de compresión en bytes de nuestro texto original <i class='bi bi-file-bar-graph-fill'></i>. El recorrido para el árbol toma en su peor caso es O(tamaño de la cadena 0 y 1).</p>";
     }
 
     else if(pos > 1600 && pos<2000){
-        document.getElementById("Burbuja").innerHTML = "<h5>¿Y cómo lo regreso a la normalidad? Pues usaremos la decodificación :O.</h5><p>Por último, volvemos a tomar el árbol que se obtuvo en la sección de adquisión de frecuencias, como tenemos nuestro texto codificado, simplemente tenemos que realizar el recorrido del árbol hasta llegar a un nodo con la letra que le representa a dicho código. Y eso es todo, esa es la codificación Huffman <i class='bi bi-emoji-laughing-fill'></i>.</p>";
+        document.getElementById("Burbuja").innerHTML = "<h5>¿Y cómo lo regreso a la normalidad? Pues usaremos la decodificación <i class='bi bi-emoji-dizzy-fill'></i>.</h5><p>Por último, volvemos a tomar el árbol que se obtuvo en la sección de adquisión de frecuencias, como tenemos nuestro texto codificado, simplemente tenemos que realizar el recorrido del árbol hasta llegar a un nodo con la letra que le representa a dicho código. Y eso es todo, esa es la codificación Huffman <i class='bi bi-emoji-laughing-fill'></i>.</p>";
     }
 
     
