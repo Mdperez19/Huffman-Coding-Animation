@@ -27,7 +27,7 @@ var hojas = [];
 var codigos = [];
 var config;
 var count;
-var contadorDeco=0;
+var contadorDeco = 0;
 var msgCodi = "";
 /************************************************ */
 /************************funciones*************** */
@@ -235,8 +235,8 @@ colorear = (simbolo) => {
 function task(i) {
     setTimeout(function () {
         colorear(hojas[i]);
-        if(i==hojas.length-1)
-        $("#CodiM").show();
+        if (i == hojas.length - 1)
+            $("#CodiM").show();
     }, 3000 * i);
     return true;
 }
@@ -267,7 +267,7 @@ function colorearTodas() {
 
         i++;
     });
-        
+
 }
 
 colorearDeco = (simbolo) => {
@@ -290,7 +290,7 @@ colorearDeco = (simbolo) => {
             codigo = codigo + aStar.path[i]._private.data.label;
         aStar.path[i].addClass('highlighted');
     }
-    var heading = document.getElementById("c"+contadorDeco);
+    var heading = document.getElementById("c" + contadorDeco);
     var animateHeading = KUTE.to(
         heading, {
             text: String.fromCharCode(simbolo)
@@ -338,79 +338,81 @@ function colorearTodasDeco() {
 /********************************************************** */
 $("#Iniciar").click(function () {
     //borrar
-    $("#Iniciar").remove();
+    
 
     msg = $('#cadena').val();
 
-    var typew = document.getElementById('typew');
+    if (msg.length > 1) {
+        $("#Iniciar").remove();
+        var typew = document.getElementById('typew');
 
-    var typewriter = new Typewriter(typew, {
-        loop: false,
-        delay: 500
-    });
+        var typewriter = new Typewriter(typew, {
+            loop: false,
+            delay: 500
+        });
 
-    typewriter.typeString(msg).start();
+        typewriter.typeString(msg).start();
 
-    cy1 = cytoscape({
-        container: document.getElementById('cy'),
+        cy1 = cytoscape({
+            container: document.getElementById('cy'),
 
-        boxSelectionEnabled: false,
-        autounselectify: true,
-
-
-        style: cytoscape.stylesheet()
-            .selector('node')
-            .style({
-                'content': 'data(name)',
-                'background-color': BONDI_BLUE
-            })
-            .selector('edge')
-            .style({
-                'curve-style': 'bezier',
-                'target-arrow-shape': 'triangle',
-                'width': 4,
-                'line-color': BOTTICELLI,
-                'target-arrow-color': BOTTICELLI
-            })
-            .selector('.highlighted')
-            .style({
-                'background-color': REGAL_BLUE,
-                'line-color': REGAL_BLUE,
-                'target-arrow-color': REGAL_BLUE,
-                'transition-property': 'background-color, line-color, target-arrow-color',
-                'transition-duration': '0.5s'
-            }),
-
-        elements: {
-            nodes: [{
-                data: {
-                    id: '01',
-                    name: 'inicio'
-                }
-            }],
-
-            edges: [{
-                data: {
-                    source: '01',
-                    target: '01'
-                }
-            }]
-        },
-
-        layout: {
-            name: 'dagre'
-        }
-    });
+            boxSelectionEnabled: false,
+            autounselectify: true,
 
 
+            style: cytoscape.stylesheet()
+                .selector('node')
+                .style({
+                    'content': 'data(name)',
+                    'background-color': BONDI_BLUE
+                })
+                .selector('edge')
+                .style({
+                    'curve-style': 'bezier',
+                    'target-arrow-shape': 'triangle',
+                    'width': 4,
+                    'line-color': BOTTICELLI,
+                    'target-arrow-color': BOTTICELLI
+                })
+                .selector('.highlighted')
+                .style({
+                    'background-color': REGAL_BLUE,
+                    'line-color': REGAL_BLUE,
+                    'target-arrow-color': REGAL_BLUE,
+                    'transition-property': 'background-color, line-color, target-arrow-color',
+                    'transition-duration': '0.5s'
+                }),
 
-    count = buildCount(msg);
+            elements: {
+                nodes: [{
+                    data: {
+                        id: '01',
+                        name: 'inicio'
+                    }
+                }],
 
-    arbol = animationbuildTree(count);
-    console.log(buildCount(msg));
-    console.log(count);
+                edges: [{
+                    data: {
+                        source: '01',
+                        target: '01'
+                    }
+                }]
+            },
 
-    /*setTimeout(() => {
+            layout: {
+                name: 'dagre'
+            }
+        });
+
+
+
+        count = buildCount(msg);
+
+        arbol = animationbuildTree(count);
+        console.log(buildCount(msg));
+        console.log(count);
+        $('#Codi').show();
+        /*setTimeout(() => {
         
     }, 10500);
 
@@ -419,6 +421,7 @@ $("#Iniciar").click(function () {
         console.log('Char: ' + k + '- Codigo: ' + v)
     );
 }, 10501);*/
+    }
 });
 
 
@@ -534,6 +537,7 @@ $('#CodiM').click(() => {
 
     var porcentaje = 100 - ((msgCodi.length / 8) * 100) / (msg.length);
     document.getElementById("porcentaje").innerHTML = "Porcentaje de compresión: " + porcentaje.toFixed(3) + "%";
+    $('#DecoM').show();
 
 });
 
@@ -590,12 +594,10 @@ $('#DecoM').click(() => {
         name: 'dagre'
     }).run();
 
-    
-// span 001   span 110
-    for (var i = 0; i < msg.length; i++) $('#typeDeco').append('<span id=c'+i+'>'+codigos[msg[i]]+'</span>');
 
-    
-    
+    // imprime toda la cadena del mensaje codificado
+    for (var i = 0; i < msg.length; i++) $('#typeDeco').append('<span id=c' + i + '>' + codigos[msg[i]] + '</span>');
+
     colorearTodasDeco();
 
     if (codigos.length == count.length)
@@ -603,12 +605,6 @@ $('#DecoM').click(() => {
             console.log('Char: ' + k + '- Codigo: ' + v)
         );
 });
-
-/*$('#Paths').click(() => {
-    Object.entries(codigos).forEach(([k, v]) => {
-        console.log('Char: ' + k + '- Codigo: ' + v)
-    });
-});*/
 
 window.addEventListener('resize', function () {
     cy1.resize();
