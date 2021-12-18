@@ -22,12 +22,17 @@
         <h1 id="app"></h1>
     </div>
     <button id="boton" class="waves-effect waves-light btn">boton xd</button>
+
+    <br><br>
+    <div class="typewriter container">
+        <h1 id="input"><span id="c1">001</span><span id="c2">101</span><span id="c3">111</span><span id="c4">000</span></h1>
+    </div>
 </body>
 
 <script src="js/rough-notation.iife.js"></script>
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/typewriter.js"></script>
-
+<script src="js/kute-extra.min.js"></script>
 <script>
     /*
     typewriter
@@ -43,18 +48,17 @@
     var app = document.getElementById('app');
 
     var typewriter = new Typewriter(app, {
-    delay: 75
+        delay: 75
     });
-    var array=[' h ',' o ',' o ',' l ',' a ',' a '];
+    var array = [' h ', ' o ', ' o ', ' l ', ' a ', ' a '];
     typewriter.pauseFor(1500);
-    for(var i = 0; i < array.length; i++)
-    {
-        typewriter.typeString('<span id=letra'+i+'>'+array[i]+'</span>').pauseFor(300);
+    for (var i = 0; i < array.length; i++) {
+        typewriter.typeString('<span id=letra' + i + '>' + array[i] + '</span>').pauseFor(300);
     }
     typewriter.start();
 </script>
 
-<script type="module">
+<script>
     /*import { annotate } from './js/rough-notation.esm.js';
     // Or using unpkg
     // import { annotate } from 'https://unpkg.com/rough-notation?module';
@@ -66,16 +70,37 @@
     const ag = annotationGroup([a1, a2, a3]);
     ag.show();*/
 
-    import { annotate, annotationGroup } from './js/rough-notation.esm.js';
-
-    $("#boton").click(function(e){
-        const a1 = annotate(document.querySelector('#letra1'), { type: 'box' });
-        const a2 = annotate(document.querySelector('#letra2'), { type: 'box' });
-        const a3 = annotate(document.querySelector('#letra3'), { type: 'box' });
+    //import { annotate, annotationGroup } from './js/rough-notation.esm.js';
+    const annotate = RoughNotation.annotate;
+    const annotationGroup = RoughNotation.annotationGroup;
+    /* $("#boton").click(function (e) {
+        const a1 = annotate(document.querySelector('#letra1'), {
+            type: 'box'
+        });
+        const a2 = annotate(document.querySelector('#letra2'), {
+            type: 'box'
+        });
+        const a3 = annotate(document.querySelector('#letra3'), {
+            type: 'box'
+        });
         const ag = annotationGroup([a3, a1, a2]);
         ag.show();
+    }); */
+    //70% Surface of Earth is Covered with Water.
+    var i=1;
+    $("#boton").click(function (e) {
+    var stringss = ['h','o','l','a'];
+        var heading = document.getElementById("c"+i);
+        var animateHeading = KUTE.to(
+            heading, {
+                text: stringss[i-1]
+            }, {
+                duration: 1600
+            }
+        );
+        animateHeading.start();
+        i++;
     });
-    
 </script>
 
 </html>

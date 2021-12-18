@@ -27,6 +27,7 @@ var hojas = [];
 var codigos = [];
 var config;
 var count;
+var contadorDeco=0;
 var msgCodi = "";
 /************************************************ */
 /************************funciones*************** */
@@ -234,6 +235,8 @@ colorear = (simbolo) => {
 function task(i) {
     setTimeout(function () {
         colorear(hojas[i]);
+        if(i==hojas.length-1)
+        $("#CodiM").show();
     }, 3000 * i);
     return true;
 }
@@ -264,6 +267,7 @@ function colorearTodas() {
 
         i++;
     });
+        
 }
 
 colorearDeco = (simbolo) => {
@@ -286,7 +290,16 @@ colorearDeco = (simbolo) => {
             codigo = codigo + aStar.path[i]._private.data.label;
         aStar.path[i].addClass('highlighted');
     }
-
+    var heading = document.getElementById("c"+contadorDeco);
+    var animateHeading = KUTE.to(
+        heading, {
+            text: String.fromCharCode(simbolo)
+        }, {
+            duration: 1600
+        }
+    );
+    animateHeading.start();
+    contadorDeco++;
     //document.getElementById("msgCod").innerHTML += String.fromCharCode(simbolo);
 
 
@@ -577,15 +590,12 @@ $('#DecoM').click(() => {
         name: 'dagre'
     }).run();
 
-    var typew = document.getElementById('typeDeco');
-    var typewriter = new Typewriter(typew, {
-        loop: false,
-        delay: 200
-    });
+    
+// span 001   span 110
+    for (var i = 0; i < msg.length; i++) $('#typeDeco').append('<span id=c'+i+'>'+codigos[msg[i]]+'</span>');
 
-    for (var i = 0; i < msg.length; i++) {
-        typewriter.pauseFor(500).typeString(codigos[msg[i]]).pauseFor(500).deleteChars(codigos[msg[i]].length).typeString('<strong>' + msg[i] + '</strong>').start();
-    }
+    
+    
     colorearTodasDeco();
 
     if (codigos.length == count.length)
@@ -609,3 +619,76 @@ window.addEventListener('resize', function () {
     cy.fit();
     //hacer que las tres gráficas sean globales
 });
+
+/*
+$('#DecoM').click(() => {
+    //eliminar boton
+    $("#DecoM").remove();
+    $("#cy3").empty();
+
+    //document.getElementById("msgCod").innerHTML = msgCodi;
+    config = {
+        container: document.getElementById('cy3'),
+
+        boxSelectionEnabled: false,
+        autounselectify: true,
+
+
+        style: cytoscape.stylesheet()
+            .selector('node')
+            .style({
+                'content': 'data(name)',
+                'background-color': BONDI_BLUE,
+            })
+            .selector('edge')
+            .style({
+                'curve-style': 'bezier',
+                'target-arrow-shape': 'triangle',
+                'width': 4,
+                'line-color': BOTTICELLI,
+                'target-arrow-color': BOTTICELLI,
+                'label': 'data(label)'
+            })
+            .selector('.highlighted')
+            .style({
+                'background-color': REGAL_BLUE,
+                'line-color': REGAL_BLUE,
+                'target-arrow-color': REGAL_BLUE,
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            }),
+
+        elements: {
+            nodes: nodos,
+
+            edges: links
+        },
+
+        layout: {
+            name: 'dagre'
+        }
+    };
+
+    cy = cytoscape(config);
+    cy.layout({
+        name: 'dagre'
+    }).run();
+
+    var typew = document.getElementById('typeDeco');
+    var typewriter = new Typewriter(typew, {
+        loop: false,
+        delay: 200
+    });
+
+    for (var i = 0; i < msg.length; i++) {
+        typewriter.pauseFor(500).typeString(codigos[msg[i]]).pauseFor(500).deleteChars(codigos[msg[i]].length).typeString('<strong>' + msg[i] + '</strong>').start();
+    }
+    colorearTodasDeco();
+
+    if (codigos.length == count.length)
+        Object.entries(codigos).forEach(([k, v]) =>
+            console.log('Char: ' + k + '- Codigo: ' + v)
+        );
+});
+
+*/

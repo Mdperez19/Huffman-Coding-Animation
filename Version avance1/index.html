@@ -17,17 +17,18 @@
     <link href="css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/type.css">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body class="d-flex flex-column h-100">
     <div class="celular">
         <div class="card shadow border-0">
             <div class="mensaje">
-                <h2>Por favor, coloca tu tablet o celular en modo horizontal para una mejor experiencia <i class='bi bi-emoji-wink-fill' ></i> </h2>
+                <h2>Por favor, coloca tu tablet o celular en modo horizontal para una mejor experiencia <i
+                        class='bi bi-emoji-wink-fill'></i> </h2>
             </div>
-            
+
             <img src="img/gallo.png" style="width: 50%; margin: auto;">
         </div>
     </div>
@@ -64,9 +65,9 @@
                     </div>
                 </div>
             </div>
-           
+
         </div>
-        
+
         <div class="container px-1 my-2 mb-1">
             <div class="infiz">
                 <button class="circulo" onclick="ocultar();">?</button>
@@ -162,7 +163,7 @@
 
                     <div class="row gx-5 justify-content-center" style="text-align: center;">
                         <a class="btn btn-primary btn-lg px-4 me-sm-3 w-25 " id="CodiM"
-                            href="#Codificacion">Codificar</a>
+                            href="#Codificacion" style="display: none;">Codificar</a>
                     </div>
                 </div>
             </div>
@@ -207,13 +208,13 @@
                 </div>
             </div>
         </section>
-        
+
         <section id="Decodificacion" class="py-1 aos-item" data-aos="fade-right">
             <div class="container px-1 my-2">
 
                 <div class="row gx-5 justify-content-center" style="text-align: center;">
                     <div class="col-lg-8 col-xl-6">
-                        <h1>Decodificacion</h1>
+                        <h1>Decodificación</h1>
                     </div>
                 </div>
 
@@ -222,7 +223,7 @@
                         <div id="divArbol" class="card h-100 shadow border-0">
                             <div id="cy3" class="card-body p-4 back animate__animated animate__fadeIn">
                                 <!--Aqui va el arbol-->
-                                
+
                             </div>
                         </div>
                     </div>
@@ -260,6 +261,7 @@
     <script src="js/util/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/util/jquery-3.6.0.min.js"></script>
+    <script src="js/rough-notation.iife.js"></script>
     <script src="js/script/scripts.js"></script>
     <script src="js/util/dagre2.js"></script>
     <script src="js/util/cytoscape.min.js"></script>
@@ -267,8 +269,8 @@
     <script src="js/script/arbol2.js"></script>
     <script src="js/util/priority-queue.min.js"></script>
     <script src="js/util/typewriter.js"></script>
+    <script src="js/util/kute-extra.min.js"></script>
     <script src="js/util/aos.js"></script>
-    <script src="js/util/scripts.js"></script>
     <script>
         AOS.init({
             easing: 'ease-in-out-sine'
