@@ -1,8 +1,10 @@
+/********Paleta de colores********* */
 const STRATOS = "#001B48";
 const REGAL_BLUE = "#02457A";
 const BONDI_BLUE = "#018ABE";
 const MORNING_GLORY = "#97CADB";
 const BOTTICELLI = "#D6E8EE";
+/************************************* */
 
 /*************Estructuras************************ */
 class Nodo {
@@ -71,10 +73,6 @@ animationbuildTree = count => {
         </tr>`);
     });
     cy1.remove(cy1.$('#01'));
-    /* var size = pq.length;
-    for (let i = 0; i < size; i++) {
-        console.log(pq.dequeue());
-    } */
     var id = 0;
     var loop = () => {
         const a = pq.dequeue();
@@ -133,11 +131,6 @@ buildTree = count => {
         pq.queue(new Nodo(v, k.charCodeAt(0), [null, null], null))
     });
 
-    /*var size=pq.length;
-    for (let i = 0; i < size; i++) {
-        console.log(pq.dequeue());
-    }*/
-
     var id = 0;
     while (pq.length) {
         const a = pq.dequeue();
@@ -195,7 +188,6 @@ function dataSet(root, elements, edges, leafs) {
 }
 
 colorear = (simbolo) => {
-    var fg = false;
     var aStar = cy2.elements().aStar({
         root: arbol.symb,
         goal: "#" + simbolo
@@ -203,11 +195,10 @@ colorear = (simbolo) => {
 
     aStar.path.select();
     console.log(aStar.distance);
-    var i = 0;
+    
 
     console.log(aStar.path.length);
-
-    var i;
+    var i = 0;
     var codigo = '';
     for (i = 0; i < aStar.path.length; i++) {
         if (aStar.path[i]._private.data.label != undefined)
@@ -271,7 +262,6 @@ function colorearTodas() {
 }
 
 colorearDeco = (simbolo) => {
-    var fg = false;
     var aStar = cy.elements().aStar({
         root: arbol.symb,
         goal: "#" + simbolo
@@ -279,7 +269,6 @@ colorearDeco = (simbolo) => {
 
     aStar.path.select();
     console.log(aStar.distance);
-    var i = 0;
 
     console.log(aStar.path.length);
 
@@ -300,8 +289,6 @@ colorearDeco = (simbolo) => {
     );
     animateHeading.start();
     contadorDeco++;
-    //document.getElementById("msgCod").innerHTML += String.fromCharCode(simbolo);
-
 
     setTimeout(() => {
         for (i = 0; i < aStar.path.length; i++)
@@ -337,9 +324,6 @@ function colorearTodasDeco() {
 
 /********************************************************** */
 $("#Iniciar").click(function () {
-    //borrar
-    
-
     msg = $('#cadena').val();
 
     if (msg.length > 1) {
@@ -412,15 +396,6 @@ $("#Iniciar").click(function () {
         console.log(buildCount(msg));
         console.log(count);
         $('#Codi').show();
-        /*setTimeout(() => {
-        
-    }, 10500);
-
-    setTimeout(() => {
-        Object.entries(codigos).forEach(([k, v]) =>
-        console.log('Char: ' + k + '- Codigo: ' + v)
-    );
-}, 10501);*/
     }
 });
 
@@ -613,7 +588,6 @@ window.addEventListener('resize', function () {
     cy2.fit();
     cy.resize();
     cy.fit();
-    //hacer que las tres gráficas sean globales
 });
 
 /*
