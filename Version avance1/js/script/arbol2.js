@@ -262,7 +262,7 @@ function dataSet(root, elements, edges, leafs) {
 }
 /**
  * Función: colorear(1)
- * Descripcion: ilumina
+ * Descripcion: ilumina los caminos recorridos
  * Recibe: 
  *  - simbolo
  * Regresa:
@@ -354,7 +354,7 @@ function colorearTodas() {
     hojas.forEach((c) => {
         //crea una promesa, para agregar funcion asincrona
         let miPrimeraPromise = new Promise((resolve, reject) => {
-            if (cicloColorear(i) == true)//si es verdadera, llamar al cicloColorear
+            if (cicloColorear(i) == true)//si es verdadera, se cumplio la promesa
                 resolve(true);
             else
                 reject(error);//cancelar en caso de error
@@ -372,90 +372,131 @@ function colorearTodas() {
     });
 
 }
-
+/**
+ * Función: colorearDeco(1)
+ * Descripcion: ilumina los caminos recorridos y muestra la decodificacion del mensaje
+ * Recibe: 
+ *  - simbolo
+ * Regresa:
+ *  - void
+ * Errores: ninguno
+*/
 colorearDeco = (simbolo) => {
+     //utiliza el algoritmo A* para iluminar cada camino, desde la raiz, hasta la hoja donde se encuentra ese simbolo
     var aStar = cy.elements().aStar({
-        root: arbol.symb,
-        goal: "#" + simbolo
+        root: arbol.symb,//raiz
+        goal: "#" + simbolo//nodo hoja
     });
-
+    //se selecciona el path establecido
     aStar.path.select();
+    //imprimimos la distancia
     console.log(aStar.distance);
-
+    //imprimimos la longitud
     console.log(aStar.path.length);
 
     var i;
     var codigo = '';
+    //visita cada nodo dentro del camino de aStar
     for (i = 0; i < aStar.path.length; i++) {
+         //si la etiqueta es diferente a vacia, es decir, tiene 0 o 1
         if (aStar.path[i]._private.data.label != undefined)
-            codigo = codigo + aStar.path[i]._private.data.label;
-        aStar.path[i].addClass('highlighted');
+            codigo = codigo + aStar.path[i]._private.data.label;//concatenar al string codigo
+        aStar.path[i].addClass('highlighted');//cambia el css de cada nodo o union visitado
     }
-    var heading = document.getElementById("c" + contadorDeco);
-    var animateHeading = KUTE.to(
-        heading, {
-            text: String.fromCharCode(simbolo)
+    var msgDecodificado = document.getElementById("c" + contadorDeco);//obtiene el id por el contador y un c concatenado
+    //se crea la animacion del mensaje siendo decodificado
+    var animarMsgDecodificado = KUTE.to(
+        msgDecodificado, {
+            text: String.fromCharCode(simbolo)//se cambia el texto, por el caracter de dicho codigo
         }, {
-            duration: 1600
+            duration: 1600//una udarcion de 1.6s
         }
     );
-    animateHeading.start();
+    //se inicia la animacion
+    animarMsgDecodificado.start();
+    //aumenta para el siguiente caracter del mensaje original
     contadorDeco++;
-
+    //borra lo iluminado, para pasar al siguiente caracter    
     setTimeout(() => {
         for (i = 0; i < aStar.path.length; i++)
-            aStar.path[i].removeClass('highlighted');
+            aStar.path[i].removeClass('highlighted');//remueve la clase que coloreaba
     }, 600);
 };
 
-
-function taskDeco(i) {
+/**
+ * Función: cicloColorearDeco(1)
+ * Descripcion: funcion que iniciar el ciclo con delay
+ * Recibe: 
+ *  - posicion
+ * Regresa:
+ *  - verdadero al finalizar la funcion
+ * Errores: ninguno
+*/
+function cicloColorearDeco(i) {
+    //cada 3 segundo, por la posicion
     setTimeout(function () {
-        colorearDeco(msg[i].charCodeAt(0));
+        colorearDeco(msg[i].charCodeAt(0));//colorea cada caracter del mensaje
     }, 3000 * i);
     return true;
 }
-
+/**
+ * Función: colorearTodas(0)
+ * Descripcion: colorea cada camino de la raiz hasta las hojas y agrega lo obtenido a la tabla
+ * Recibe: 
+ *  - void
+ * Regresa:
+ *  - void
+ * Errores: ninguno
+*/
 function colorearTodasDeco() {
+    //para todos los caracteres del mensaje original
     for (var i = 0; i < msg.length; i++) {
-
+        //crea una promesa, para agregar funcion asincrona
         let miPrimeraPromise = new Promise((resolve, reject) => {
-            if (taskDeco(i) == true)
-                resolve(true);
+            if (cicloColorearDeco(i) == true)
+                resolve(true);//si es verdadera, se cumplio la promesa
             else
-                reject(error);
+                reject(error);//cancelar en caso de error
         });
-
+        //despues de que se cumpla la promesa
         miPrimeraPromise.then(function (value) {
-            if (value == true) cy = cytoscape(config);
+            if (value == true) cy = cytoscape(config);//si el valor obtenido es verdadero, reiniciar el arbol con la configuración
         }, function (error) {
+            //en caso de error, impirmir ese mensaje
             console.log("No puelo");
         });
     }
 }
 
 /********************************************************** */
+//evento al dar click en Iniciar
 $("#Iniciar").click(function () {
+    //obtiene el mensaje
     msg = $('#cadena').val();
-
+    //si el mensaje no es mas grande que 1 caracter, no continuar
     if (msg.length > 1) {
+        //quita el boton seleccionado
         $("#Iniciar").remove();
+        //adquiere el id donde se escribirá el mensaje original
         var typew = document.getElementById('typew');
-
+        //se inicializa la animación
         var typewriter = new Typewriter(typew, {
-            loop: false,
-            delay: 500
+            loop: false,//solo hacerlo una vez
+            delay: 500 //delay de .5s
         });
 
+        //se inicia la animacion de la escritura del mensaje original
         typewriter.typeString(msg).start();
 
+        //se construye el arbol animado
         cy1 = cytoscape({
+            //establece en que id se contruye el arbol
             container: document.getElementById('cy'),
 
             boxSelectionEnabled: false,
-            autounselectify: true,
+            autounselectify: true,//se deja la seleccion de nodos
 
-
+            //se le asigna el estilo del grafico del arbol
             style: cytoscape.stylesheet()
                 .selector('node')
                 .style({
@@ -478,7 +519,7 @@ $("#Iniciar").click(function () {
                     'transition-property': 'background-color, line-color, target-arrow-color',
                     'transition-duration': '0.5s'
                 }),
-
+            //se agrega un nodo temporal por default (se elimina en seguida)
             elements: {
                 nodes: [{
                     data: {
@@ -494,19 +535,19 @@ $("#Iniciar").click(function () {
                     }
                 }]
             },
-
+            //se le asigna la propiedad de arbol binario
             layout: {
                 name: 'dagre'
             }
         });
-
-
-
+        //se obtiene las frecuencias del arbol
         count = buildCount(msg);
-
+        //se construye el arbol con esas frecuencias
         arbol = animationbuildTree(count);
+        //se imprime los resultados
         console.log(buildCount(msg));
         console.log(count);
+        //aparece el boton de la siguiente sección
         $('#Codi').show();
     }
 });
