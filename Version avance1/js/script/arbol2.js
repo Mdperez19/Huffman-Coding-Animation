@@ -1,3 +1,10 @@
+/**
+ * Titulo: Proyecto, algoritmo "Códigos Huffman"
+ * Descripción: implementacion del algoritmo de Huffman en web
+ * Fecha: 21-dec-2021
+ * Versión: 3
+*/
+
 /********Paleta de colores********* */
 const STRATOS = "#001B48";
 const REGAL_BLUE = "#02457A";
@@ -7,83 +14,118 @@ const BOTTICELLI = "#D6E8EE";
 /************************************* */
 
 /*************Estructuras************************ */
+//clase Nodo
 class Nodo {
     constructor(count, symb, [a, b], digit) {
-        this.digit = digit;
-        this.count = count;
-        this.symb = symb;
-        this.children = [a, b];
+        this.digit = digit; //digito 1 o 0
+        this.count = count; //frecuencia del caracter
+        this.symb = symb; //simbolo
+        this.children = [a, b]; //hijos
     }
 }
 /************************************************ */
 /********Variables globales**************** */
 
-var cy1;
-var cy2;
-var cy;
-var arbol
-var msg;
-var nodos = [];
-var links = [];
-var hojas = [];
-var codigos = [];
-var config;
-var count;
-var contadorDeco = 0;
-var msgCodi = "";
+var cy1; //arbol 1
+var cy2;//arbol 2
+var cy;//arbol 3
+var arbol; //arbol
+var msg; //mensaje
+var nodos = []; //arreglo de nodos
+var links = []; //arreglo de uniones de los nodos
+var hojas = []; //arreglo de hojas
+var codigos = []; //codigos obtenidos
+var config; //configuracion de los arboles
+var count; //tamaño
+var contadorDeco = 0; //contador global para la decodificaciones
+var msgCodi = ""; //mensaje codificado
 /************************************************ */
 /************************funciones*************** */
+/**
+ * Función: buildCount(1)
+ * Descripcion: obtiene las frecuencias de un mensajes y crea un arreglo de objetos
+ * Recibe: 
+ *  - mensaje
+ * Regresa:
+ *  - arreglo de objetos: caracter y su frecuencia
+ * Errores: ninguno
+*/
 buildCount = (msg) => {
-    const obj = {};
+    const obj = {}; //arreglo de objetos
+    //para cada caracter, separarlo y lo obtenido, sacar el caracter y aumentar por cada aparicion
     msg.split('').forEach(e => {
         if (!obj[e]) obj[e] = 0;
-        obj[e] += 1;
+        obj[e] += 1; //aumenta uno
     });
     return obj;
 }
-
+/**
+ * Función: animationbuildTree(1)
+ * Descripcion: construye el arbol de manera animada
+ * Recibe: 
+ *  - frecuencias
+ * Regresa:
+ *  - arbol construido
+ * Errores: ninguno
+*/
 animationbuildTree = count => {
+    //vacia la tabla
     $("#cabeceraTabla").empty();
+    //crea la cabecera de la tabla con animaciones
     $("#cabeceraTabla").append(`<tr>
         <th class="animate__animated animate__fadeIn" scope="col">Caracter</th>
         <th class="animate__animated animate__fadeIn" scope="col">Frecuencia</th>
     </tr>`);
+    //vacia el cuerpo de la tabla
     $("#cuerpoTabla").empty();
+    //crea una cola de prioridad, de menor a mayor frecunecia
     const pq = new PriorityQueue({
         comparator: function (a, b) {
             return a.count - b.count;
         }
     });
-
+    //para cada objeto dentro de las frencuencias, obtener ambos elementos
     Object.entries(count).forEach(([k, v]) => {
+        //insertar en la cola un nuevo nodo, con las frecuencias obtenidas, el simbolo convertido en ascii, dos hijos nulos y si es 1 o 0
         pq.queue(new Nodo(v, k.charCodeAt(0), [null, null], null));
+        //se agrega al arbol, el nodo con el caracter
         cy1.add([{
             group: "nodes",
             "data": {
-                "id": k.charCodeAt(0),
-                "name": k
+                "id": k.charCodeAt(0), //su id, será su ascii
+                "name": k//el nombre con el que aparecerá será su simbolo
             }
         }]);
+        //mantiene la propiedad de arbol binario
         cy1.layout({
             name: 'dagre'
         }).run();
+        //se agrega a la tabla su frecuenica y su caracter
         $("#cuerpoTabla").append(`<tr>
         <td class="animate__animated animate__fadeIn">${k}</td>
         <td class="animate__animated animate__pulse">${v}</td>
         </tr>`);
     });
+    //se borra el nodo auxiliar, ya que con este, permite la creacion del arbol
     cy1.remove(cy1.$('#01'));
     var id = 0;
+    //algoritmo de huffman
     var loop = () => {
+        //extrae el minimo de la cola de prioridad
         const a = pq.dequeue();
+        //si su tamaño es 0, retorna el minimo obtenido
         if (pq.length == 0)
             return a;
+        //extrae el segundo minimo
         const b = pq.dequeue();
+        //le asigna sus digitos a cada uno, 0 si es izquierda, 1 si es derecha
         a.digit = 0;
         b.digit = 1;
+        //obtiene la suma de sus frecuencias
         var value = a.count + b.count;
-        pq.queue(new Nodo(value, 'a' + id, [a, b], null));
-
+        //inserta un nuevo nodo a la cola, con la suma de las frecuencias, un simbolo a+"contador" (que será su id en el arbol), cada caracter obtienido será sus hijos y el nuevo nodo no tiene digito
+        pq.queue(new Nodo(value, 'a' + id, [a, b], null)); 
+        //agrega este nodo creado y crea sus conexiones
         cy1.add([{
                 group: "nodes",
                 "data": {
@@ -106,42 +148,60 @@ animationbuildTree = count => {
                 }
             }
         ]);
-
+        //mantiene la propiedad de arbol binario
         cy1.layout({
             name: 'dagre'
         }).run();
-
+        //redimensiona y acomoda el arbol
         cy1.resize();
         cy1.fit();
         id++;
+        //vuelve a ejecutar el loop, con un delay
         setTimeout(loop, 1000);
     }
+    //primer delay
     setTimeout(loop, 3050);
 
 }
-
+/**
+ * Función: buildTree(1)
+ * Descripcion: construye el arbol sin animacion, ahora con los digitos en cada union
+ * Recibe: 
+ *  - frecuencias
+ * Regresa:
+ *  - arbol construido
+ * Errores: ninguno
+*/
 buildTree = count => {
+    //crea una cola de prioridad, de menor a mayor frecunecia
     const pq = new PriorityQueue({
         comparator: function (a, b) {
             return a.count - b.count;
         }
     });
-
+    //insertar en la cola un nuevo nodo, con las frecuencias obtenidas, el simbolo convertido en ascii, dos hijos nulos y si es 1 o 0
     Object.entries(count).forEach(([k, v]) => {
         pq.queue(new Nodo(v, k.charCodeAt(0), [null, null], null))
     });
 
+    //algoritmo de huffman
     var id = 0;
     while (pq.length) {
+        //extrae el minimo de la cola de prioridad
         const a = pq.dequeue();
+        //si su tamaño es 0, retorna el minimo obtenido
         if (pq.length == 0)
             return a;
+        //extrae el segundo minimo
         const b = pq.dequeue();
+        //le asigna sus digitos a cada uno, 0 si es izquierda, 1 si es derecha
         a.digit = 0;
         b.digit = 1;
+        //obtiene la suma de sus frecuencias
         var value = a.count + b.count;
+        //inserta un nuevo nodo a la cola, con la suma de las frecuencias, un simbolo a+"contador" (que será su id en el arbol), cada caracter obtienido será sus hijos y el nuevo nodo no tiene digito
         pq.queue(new Nodo(value, 'r' + id, [a, b], null));
-        id++;
+        id++;//aumenta el nuevo id
     }
 }
 
