@@ -311,41 +311,64 @@ colorear = (simbolo) => {
     }, 600);
 };
 
-
-function task(i) {
+/**
+ * Función: cicloColorear(1)
+ * Descripcion: funcion que iniciar el ciclo con delay
+ * Recibe: 
+ *  - posicion
+ * Regresa:
+ *  - verdadero al finalizar la funcion
+ * Errores: ninguno
+*/
+function cicloColorear(i) {
+    //cada 3 segundo, por la posicion
     setTimeout(function () {
-        colorear(hojas[i]);
+        colorear(hojas[i]);//colorea hasta las hojas
         if (i == hojas.length - 1)
-            $("#CodiM").show();
+            $("#CodiM").show();//si llegó a todas las hojas, entonces aparece el boton de la siguiente seccion
     }, 3000 * i);
     return true;
 }
-
+/**
+ * Función: colorearTodas(0)
+ * Descripcion: colorea cada camino de la raiz hasta las hojas y agrega lo obtenido a la tabla
+ * Recibe: 
+ *  - void
+ * Regresa:
+ *  - void
+ * Errores: ninguno
+*/
 function colorearTodas() {
     var i = 0;
+    //vacia la tabla
     $("#cabeceraTabla2").empty();
+    //agrega a la cabeecera, los titulos de caracter, ascii y su codigo
     $("#cabeceraTabla2").append(`<tr>
         <th class="animate__animated animate__fadeIn" scope="col">Caracter</th>
         <th class="animate__animated animate__fadeIn" scope="col"># ASCII</th>
         <th class="animate__animated animate__fadeIn" scope="col">Código</th>
     </tr>`);
+    //vacia el cuerpo de la tabla
     $("#cuerpoTabla2").empty();
+    //para cada hoja, hacer lo siguiente
     hojas.forEach((c) => {
-
+        //crea una promesa, para agregar funcion asincrona
         let miPrimeraPromise = new Promise((resolve, reject) => {
-            if (task(i) == true)
+            if (cicloColorear(i) == true)//si es verdadera, llamar al cicloColorear
                 resolve(true);
             else
-                reject(error);
+                reject(error);//cancelar en caso de error
         });
 
+        //despues de que se cumpla la promesa
         miPrimeraPromise.then(function (value) {
-            if (value == true) cy2 = cytoscape(config);
+            if (value == true) cy2 = cytoscape(config);//si el valor obtenido es verdadero, reiniciar el arbol con la configuración
         }, function (error) {
+            //en caso de error, impirmir ese mensaje
             console.log("No puelo");
         });
 
-        i++;
+        i++;//aumentar el caracter a colorear
     });
 
 }
