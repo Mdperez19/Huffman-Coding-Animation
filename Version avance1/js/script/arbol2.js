@@ -204,81 +204,110 @@ buildTree = count => {
         id++;//aumenta el nuevo id
     }
 }
-
+/**
+ * Función: dataSet(4)
+ * Descripcion: crea los elementos que contendrá el arbol de huffman
+ * Recibe: 
+ *  - raiz
+ *  - elementos
+ *  - uniones entre nodos
+ *  - hojas
+ * Regresa:
+ *  - void
+ * Errores: ninguno
+*/
 function dataSet(root, elements, edges, leafs) {
+    //si es hoja
     if (root.children[0] == null) {
         elements.push({
             "data": {
-                "id": root.symb,
-                "name": String.fromCharCode(root.symb)
+                "id": root.symb, //su id, será su simbolo en ascii
+                "name": String.fromCharCode(root.symb) //se mostrará en el nodo el simbolo como caracter
             }
         });
     } else
         elements.push({
             "data": {
-                "id": root.symb,
-                "name": root.count
+                "id": root.symb,//su id, será su simbolo en ascii
+                "name": root.count//se mostrará en el nodo, la frecuencia
             }
         });
     if (root.children[0] != null) {
         edges.push({
             "data": {
-                "source": root.symb,
-                "target": root.children[0].symb,
-                "label": root.children[0].digit
+                "source": root.symb, //estará conectado del simbolo en el que esta
+                "target": root.children[0].symb, //con su hijo
+                "label": root.children[0].digit //como etiqueta en cada union, será el digito 0 1
             }
         });
+        //recursividad cambiando con el hijo de la raiz actual
         dataSet(root.children[0], elements, edges, leafs);
     }
-
+    //hijo derehco
     if (root.children[1] != null) {
         edges.push({
             "data": {
-                "source": root.symb,
-                "target": root.children[1].symb,
-                "label": root.children[1].digit
+                "source": root.symb,//estará conectado del simbolo en el que esta
+                "target": root.children[1].symb,//con su hijo
+                "label": root.children[1].digit//como etiqueta en cada union, será el digito 0 1
             }
         });
+        //recursividad cambiando con el hijo de la raiz actual
         dataSet(root.children[1], elements, edges, leafs);
     }
-
+    // si ambos hijos del nodo actual son nulos, significa que son hojas
     if (root.children[0] == null && root.children[1] == null) {
-        leafs.push(root.symb);
+        leafs.push(root.symb);//agregar al arreglo de hojas
     }
 }
-
+/**
+ * Función: colorear(1)
+ * Descripcion: ilumina
+ * Recibe: 
+ *  - simbolo
+ * Regresa:
+ *  - void
+ * Errores: ninguno
+*/
 colorear = (simbolo) => {
+    //utiliza el algoritmo A* para iluminar cada camino, desde la raiz, hasta la hoja donde se encuentra ese simbolo
     var aStar = cy2.elements().aStar({
-        root: arbol.symb,
-        goal: "#" + simbolo
+        root: arbol.symb, //raiz
+        goal: "#" + simbolo //nodo hoja
     });
 
+    //se selecciona el path establecido
     aStar.path.select();
+    //imprimimos la distancia
     console.log(aStar.distance);
-    
-
+    //imprimimos la longitud
     console.log(aStar.path.length);
     var i = 0;
     var codigo = '';
+    //visita cada nodo dentro del camino de aStar
     for (i = 0; i < aStar.path.length; i++) {
+        //si la etiqueta es diferente a vacia, es decir, tiene 0 o 1
         if (aStar.path[i]._private.data.label != undefined)
-            codigo = codigo + aStar.path[i]._private.data.label;
-        aStar.path[i].addClass('highlighted');
+            codigo = codigo + aStar.path[i]._private.data.label;//concatenar al string codigo
+        aStar.path[i].addClass('highlighted');//cambia el css de cada nodo o union visitado
     }
 
+    //agrega a la tabla el nodo encontrado, su simbolo, su ascii y su codigo generado
     $("#cuerpoTabla2").append(`<tr>
     <td class="animate__animated animate__fadeIn">${String.fromCharCode(simbolo)}</td>
     <td class="animate__animated animate__pulse">${simbolo}</td>
     <td class="animate__animated animate__pulse">${codigo}</td>
     </tr>`);
-
+    //impirme el codigo
     console.log(codigo);
 
+    //guada en el arreglo de codigos, el codigo, donde su posicion, es su caracter
     codigos[String.fromCharCode(simbolo)] = codigo;
 
+    //borra lo iluminado, para pasar al siguiente caracter
     setTimeout(() => {
         for (i = 0; i < aStar.path.length; i++)
-            aStar.path[i].removeClass('highlighted');
+            aStar.path[i].removeClass('highlighted');//remueve la clase que coloreaba
     }, 600);
 };
 
