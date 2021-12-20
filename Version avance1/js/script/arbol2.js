@@ -552,18 +552,21 @@ $("#Iniciar").click(function () {
     }
 });
 
-
+//evento al dar click en el boton Codi
 $('#Codi').click(() => {
     //eliminar boton
     $("#Codi").remove();
+    //vacia el div
     $("#cy2").empty();
+    //establece las configuraciones del arbol de codificaciones
     config = {
+        //obtiene el id donde se contruye el arbol
         container: document.getElementById('cy2'),
 
         boxSelectionEnabled: false,
-        autounselectify: true,
+        autounselectify: true,//se deja habilitado la seleccion
 
-
+        //se le asigna los estilos al grafico del arbol
         style: cytoscape.stylesheet()
             .selector('node')
             .style({
@@ -587,62 +590,71 @@ $('#Codi').click(() => {
                 'transition-property': 'background-color, line-color, target-arrow-color',
                 'transition-duration': '0.5s'
             }),
-
+        //se agrega los nodos y las uniones obtenidas en la construcción del arbol
         elements: {
             nodes: nodos,
 
             edges: links
         },
-
+        //se establece la propiedad de arbol binario
         layout: {
             name: 'dagre'
         }
     };
+    //contruye el arbol con las frecuencias
     arbol = buildTree(count);
+    //establece los elementos de arbol
     dataSet(arbol, nodos, links, hojas);
+    //construye el arbol con la configuración establecida
     cy2 = cytoscape(config);
+    //se establece la propiedad de arbol binario
     cy2.layout({
         name: 'dagre'
     }).run();
+    //colorea todos los caminos para cada caracter
     colorearTodas();
-
+    //para la depuracipon, se impirme el caracter y su codigo en la consola
     if (codigos.length == count.length)
         Object.entries(codigos).forEach(([k, v]) =>
             console.log('Char: ' + k + '- Codigo: ' + v)
         );
 });
-
+//evento al dar click en CodiM
 $('#CodiM').click(() => {
     ///  1011011010101001
     //eliminar boton
     $("#CodiM").remove();
+    //obitnee el id donde aparece la animacion de escritura
     var typew = document.getElementById('typecode');
-
+    //concatena el mensaje codificado con cada codigo obtenido
     for (var i = 0; i < msg.length; i++) {
         //    10101    '10101'
         msgCodi = msgCodi + codigos[msg[i]];
     }
-
+    //para depuracion, imprime los bytes de la codificacion y el mensaje original
     console.log("Longitud cod bytes: " + (msgCodi.length) / 8);
     console.log("Longitud msg bytes: " + (msg.length) * 8);
 
+    //inicializa las configuraciones de la animacion
     var typewriter = new Typewriter(typew, {
-        loop: false,
-        delay: 200
+        loop: false,//solo se hace una vez
+        delay: 200 //delay de .2s
     });
 
+    //escribe el caracter, lo borra y escribe su codigo
     for (var i = 0; i < msg.length; i++) {
         typewriter.pauseFor(1000).typeString(msg[i]).pauseFor(1000).deleteChars(1).typeString('<strong>' + codigos[msg[i]] + '</strong>').start();
     }
-
+    //obtiene el id donde se inserta la grafica de barras
     const ctx = document.getElementById('myChart').getContext('2d');
+    //se establece las configuraciones para la grafica
     const myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'bar',//sera de tipo barra
         data: {
-            labels: ['Mensaje original', 'Codificación'],
+            labels: ['Mensaje original', 'Codificación'],//sus etiquetas
             datasets: [{
                 label: '# de Bytes',
-                data: [(msg.length), (msgCodi.length) / 8],
+                data: [(msg.length), (msgCodi.length) / 8],//el dto será la diferencia de tamaños de la codificacion
                 backgroundColor: [
                     BONDI_BLUE, //REGAL_BLUE
                     BOTTICELLI //MORNING_GLORY
@@ -662,26 +674,30 @@ $('#CodiM').click(() => {
             }
         }
     });
-
+    //obtiene el porcentaje de compresion
     var porcentaje = 100 - ((msgCodi.length / 8) * 100) / (msg.length);
+    //imprime debajo del grafico este resutlado
     document.getElementById("porcentaje").innerHTML = "Porcentaje de compresión: " + porcentaje.toFixed(3) + "%";
+    //muestra el boton de la siguiente seccion
     $('#DecoM').show();
 
 });
-
+//evento al dar click en DecoM
 $('#DecoM').click(() => {
     //eliminar boton
     $("#DecoM").remove();
+    //vacia el div con el arbol
     $("#cy3").empty();
 
-    //document.getElementById("msgCod").innerHTML = msgCodi;
+    //establece la configuración para el arbol
     config = {
+        //obtiene el id donde aparecerá el arbol
         container: document.getElementById('cy3'),
 
         boxSelectionEnabled: false,
-        autounselectify: true,
+        autounselectify: true, //se habilita la seleccion
 
-
+        //se le da los estilos al arbol
         style: cytoscape.stylesheet()
             .selector('node')
             .style({
@@ -705,19 +721,20 @@ $('#DecoM').click(() => {
                 'transition-property': 'background-color, line-color, target-arrow-color',
                 'transition-duration': '0.5s'
             }),
-
+        //se agrega los nodos y las uniones con los elementos obtenidos en la contrucción
         elements: {
             nodes: nodos,
 
             edges: links
         },
-
+        //propiedad de arbol binario
         layout: {
             name: 'dagre'
         }
     };
-
+    //contruye el arbol con la configuracion establecida
     cy = cytoscape(config);
+    //mantiene la propiedad de arbol binario
     cy.layout({
         name: 'dagre'
     }).run();
@@ -726,14 +743,15 @@ $('#DecoM').click(() => {
     // imprime toda la cadena del mensaje codificado
     for (var i = 0; i < msg.length; i++) $('#typeDeco').append('<span id=c' + i + '>' + codigos[msg[i]] + '</span>');
 
+    //colorea cada caracter del mensaje original
     colorearTodasDeco();
-
+    //para depruacion, imprime caracter y codigo en consola
     if (codigos.length == count.length)
         Object.entries(codigos).forEach(([k, v]) =>
             console.log('Char: ' + k + '- Codigo: ' + v)
         );
 });
-
+//arboles responsivos
 window.addEventListener('resize', function () {
     cy1.resize();
     cy1.fit();
