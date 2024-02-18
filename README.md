@@ -4,7 +4,7 @@ This is a web application that demonstrates the Huffman coding algorithm. It was
 
 ## Visualization
 
-The application is hosted via GitHub Pages and can be accessed [here](https://josepablito16.github.io/huffman-coding-animation/). 
+The application is hosted via GitHub Pages and can be accessed [here](#). 
 
 ### Huffman tree construction and codes generation
 
@@ -13,20 +13,21 @@ The application allows the user to input a string and visualize the Huffman codi
 > [!NOTE]
 > You can write any character or symbol in the input field. Give it a try!
 
-![alt text](images/Huffman-1.gif)
+![Huffman tree creation](https://github.com/Mdperez19/Proyecto-Huffman/assets/65148768/b50094ad-6c32-44d5-b50c-bcf85b336721)
 
-![alt text](images/Huffman-2.gif)
+![Huffman codes generation](https://github.com/Mdperez19/Proyecto-Huffman/assets/65148768/606f12ef-b64e-4593-9092-6b5afd20a55c)
+
 
 > [!TIP]
 > If you want to see a deeper explanation of the algorithm, you can click on the **Question mark "?"** button.
 
-![alt text](images/Huffman-5.gif)
+![Algorithm explanation](https://github.com/Mdperez19/Proyecto-Huffman/assets/65148768/d35b6250-6a33-45cf-be84-dc4daf8f47f8)
 
 ### Message encoding
 
 The application also allows the user to encode a message using the Huffman codes generated from the input string.
 
-![alt text](images/Huffman-3.gif)
+![Message encoding](https://github.com/Mdperez19/Proyecto-Huffman/assets/65148768/f14f2006-7299-415f-aaec-d3d4d2f311a5)
 
 In this section you can see the encoded message and the binary representation of the message. Also you can see the compression percentage of the message.
 
@@ -34,4 +35,4 @@ In this section you can see the encoded message and the binary representation of
 
 And finally, the application allows the user to decode a message using the Huffman tree generated from the input string.
 
-![alt text](images/Huffman-4.gif)
+![Message decoding](https://github.com/Mdperez19/Proyecto-Huffman/assets/65148768/18529716-60b1-478d-8759-dab512650244)
