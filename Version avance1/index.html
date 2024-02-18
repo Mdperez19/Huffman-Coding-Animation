@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Codificación Huffman</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/i" href="img/gallo.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link rel="stylesheet" href="css/bootstrap-icons.css">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" href="css/aos.css">
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/type.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body class="d-flex flex-column h-100">
+    <div class="celular">
+        <div class="card shadow border-0">
+            <div class="mensaje">
+                <h2>Por favor, coloca tu tablet o celular en modo horizontal para una mejor experiencia <i
+                        class='bi bi-emoji-wink-fill'></i> </h2>
+            </div>
+
+            <img src="img/gallo.png" style="width: 50%; margin: auto;">
+        </div>
+    </div>
+    <main class="flex-shrink-0 todo">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" href="index.html">Introduce tu mensaje</a>
+                <input class="form-control w-25 navbar-brand h-25" style="color:black;" id="cadena" type="cadena"
+                    placeholder="Por ejemplo 'perro'">
+                <a class="navbar-brand" href="index.html"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span
+                        class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <!--Aqui se introducen  las funciones para iniciar-->
+                        <li class="nav-item"><a class="nav-link" id="Iniciar" href="#typew">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Reiniciar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!--La Burbujita-->
+        <div class="container px-1 my-2 mb-1">
+            <div class="row gx-5 justify-content-center">
+                <div id="Burbujita" style="display:none;" class="container px-1 my-2 mb-1">
+                    <div class="inf">
+                        <div id="Burbuja" class="burbuja">
+                            <div id="Burbujatexto"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container px-1 my-2 mb-1">
+            <div class="infiz">
+                <button class="circulo" onclick="ocultar();">?</button>
+                <!--<input type="button" id="Boton" class="circulo" onclick="ocultar();" value="Mostrar">-->
+            </div>
+        </div>
+
+
+        <section id="Adquisicion" class="py-1">
+            <div class="container px-1 my-2 mb-1">
+
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <div class="col-lg-8 col-xl-6">
+                        <h1>Adquisición de Frecuencias</h1>
+                        <div class="container bg-white">
+                            <div class="typewrite">
+                                <h2 class="align-text-top" id="typew"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-4 my-5 mb-1">
+                    <div class="col-lg-6 mb-1">
+                        <div id="divArbol" class="card shadow border-0">
+                            <div id="cy" class="card-body p-4  back animate__animated animate__fadeIn">
+                                <!--Aqui va el arbol-->
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-1">
+                        <div id="tabla" class="card h-100 shadow border-0">
+                            <div class="card-body p-4 back h-100">
+                                <!--Aqui va las listas de la frecuencia-->
+                                <table id="tablaFrecuencias" class="table table-hover" style="text-align:center;">
+                                    <thead id="cabeceraTabla">
+
+                                    </thead>
+                                    <tbody id="cuerpoTabla">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <a class="btn btn-primary btn-lg px-4 me-sm-3 w-25 " id="Codi" href="#Construccion" style="display: none;">Construir
+                        códigos</a>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section id="Construccion" class="py-1 aos-item" data-aos="fade-right">
+            <div class="container px-1 my-1">
+
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <div class="col-lg-8 col-xl-6 mb-1">
+                        <h1>Construcción de códigos</h1>
+                    </div>
+                </div>
+
+                <div class="row gx-4 my-2">
+                    <div class="col-lg-6 mb-2">
+                        <div id="divArbol" class="card h-100 shadow border-0">
+                            <div id="cy2" class="card-body p-4 back animate__animated animate__fadeIn">
+                                <!--Aqui va el arbol-->
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-2">
+                        <div class="card h-100 shadow border-0">
+                            <div class="card-body p-4 back">
+                                <!--Aqui va las listas de la frecuencia-->
+                                <table id="tablaCodigos" class="table table-hover" style="text-align:center;">
+                                    <thead id="cabeceraTabla2">
+
+                                    </thead>
+                                    <tbody id="cuerpoTabla2">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gx-5 justify-content-center" style="text-align: center;">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3 w-25 " id="CodiM"
+                            href="#Codificacion" style="display: none;">Codificar</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="Codificacion" class="py-1 aos-item" data-aos="fade-right">
+            <div class="container px-1 my-2">
+
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <div class="col-lg-8 col-xl-6">
+                        <h1>Codificación de mensaje</h1>
+                    </div>
+                </div>
+
+                <div class="row gx-4 my-2">
+                    <div class="col-lg-6 mb-2">
+                        <div id="divCodigo" class="card h-100 shadow border-0 typewrite">
+                            <div class="card-body p-4 back animate__animated animate__fadeIn">
+                                <!--Aqui va el mensaje codificado-->
+                                <h1 id="typecode"></h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-2">
+                        <div class="card h-100 shadow border-0">
+                            <div class="card-body p-4 back">
+                                <!--Aqui van las estadisticas de codifiación-->
+                                <canvas id="myChart" width="400" height="400"></canvas>
+                                <div class="divPorcentaje">
+                                    <h2 class="align-text-top" id="porcentaje"></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <a class="btn btn-primary btn-lg px-4 me-sm-3 w-25 " id="DecoM"
+                        href="#Decodificacion" style="display: none;">Decodificar</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="Decodificacion" class="py-1 aos-item" data-aos="fade-right">
+            <div class="container px-1 my-2">
+
+                <div class="row gx-5 justify-content-center" style="text-align: center;">
+                    <div class="col-lg-8 col-xl-6">
+                        <h1>Decodificación</h1>
+                    </div>
+                </div>
+
+                <div class="row gx-4 my-1">
+                    <div class="col-lg-6 mb-3">
+                        <div id="divArbol" class="card h-100 shadow border-0">
+                            <div id="cy3" class="card-body p-4 back animate__animated animate__fadeIn">
+                                <!--Aqui va el arbol-->
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-3">
+                        <div class="card h-100 shadow border-0">
+                            <div class="card-body p-4 back">
+                                <!--Aqui va el mensaje decodificado-->
+                                <h1 id="typeDeco"></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer-->
+    <footer class="bg-dark py-1 mt-auto">
+        <div class="container px-1">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row foo">
+                <div class="col-auto foo">
+                    <img src="img/gallo.png" style="width: 8%;">
+                    <div class="small m-0 text-white m-1">Copyright &copy; Gallos de Oro 2021</div>
+                </div>
+
+                <div class="col-auto">
+                    <a class="small m-0 text-white" href="#">Codificación Huffman</a>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="js/util/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/util/jquery-3.6.0.min.js"></script>
+    <script src="js/script/scripts.js"></script>
+    <script src="js/util/dagre2.js"></script>
+    <script src="js/util/cytoscape.min.js"></script>
+    <script src="js/util/dagre.js"></script>
+    <script src="js/script/arbol2.js"></script>
+    <script src="js/util/priority-queue.min.js"></script>
+    <script src="js/util/typewriter.js"></script>
+    <script src="js/util/kute-extra.min.js"></script>
+    <script src="js/util/aos.js"></script>
+    <script>
+        AOS.init({
+            easing: 'ease-in-out-sine'
+        });
+    </script>
+    <script src="js/util/chart.js"></script>
+
+    </script>
+</body>
+
+</html>

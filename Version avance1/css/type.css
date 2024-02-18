@@ -1,0 +1,38 @@
+.Typewriter__cursor {
+    color: #018ABE;
+}
+
+#cy
+{
+    width: 100%;
+    height: 75vh;
+    display: block;
+}
+
+#tabla{
+    height: 75vh;
+}
+
+#cy2 {
+    width: 100%;
+    height: 80vh;
+    display: block;
+}
+
+#cy3 {
+    width: 100%;
+    height: 80vh;
+    display: block;
+}
+
+#typecode {
+    width: 100%;
+    height: 80vh;
+    display: block;
+}
+
+.grid_container {
+    display: grid;
+    grid-template-columns: 49% 49%;
+    grid-column-gap: 2%;
+}
