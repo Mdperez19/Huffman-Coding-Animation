@@ -13,7 +13,7 @@ This project was brought to life by:
 
 ## Visualization
 
-The application is hosted via GitHub Pages and can be accessed [here](#). 
+The application is hosted via GitHub Pages and can be accessed [here](https://mdperez19.github.io/Huffman-Coding-Animation/). 
 
 ### Huffman tree construction and codes generation
 
