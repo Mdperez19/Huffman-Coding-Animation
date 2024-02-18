@@ -2,6 +2,15 @@
 
 This is a web application that demonstrates the Huffman coding algorithm. It was created as a final project for the course "Algorithms Analysis" at the [Superior School of Computer Science](https://www.escom.ipn.mx/) of the National Polytechnic Institute of Mexico.
 
+## The Team
+
+This project was brought to life by:
+
+- Mario Daniel Pérez Priego [@Mdperez19](https://github.com/Mdperez19)
+- Alberto Palacios Cabrera [@AlbertoPC13](https://github.com/AlbertoPC13)
+- Lissete López Hernández [@Aliss55](https://github.com/Aliss55)
+- Carlos Jesus Morales Hernandez [@Capu720](https://github.com/Capu720)
+
 ## Visualization
 
 The application is hosted via GitHub Pages and can be accessed [here](#). 
